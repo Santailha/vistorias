@@ -106,9 +106,16 @@ tbody tr:hover { background-color: rgba(255, 255, 255, 0.05); }
     *** MELHORIAS ESPECÍFICAS PARA A PÁGINA DE DETALHES ***
    ==================================================================== */
 
-/* --- AJUSTE FINAL: TÍTULOS DE SEÇÃO EM DESTAQUE --- */
+/* --- Título Principal da Vistoria --- */
+#details-page #details-codigo {
+    color: var(--cor-primaria); /* Cor de destaque para o código do imóvel */
+    font-size: 1.875rem;       /* Aumenta o tamanho para text-3xl */
+    line-height: 2.25rem;
+}
+
+/* --- Títulos de Seção (Painel de Ações, Histórico) --- */
 #details-page .bg-white h3 {
-    color: var(--cor-primaria); /* Usa a cor principal da marca para destaque */
+    color: var(--cor-primaria); 
     font-size: 1.25rem;
 }
 
