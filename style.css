@@ -2,18 +2,21 @@
 :root {
     --cor-azul: #3d357e;
     --cor-amarela: #edae0f;
-    --cor-fundo-escuro: #111827;
-    --cor-painel-escuro: #1f2937;
-    --cor-borda-escura: #374151;
-    --cor-input-fundo: #374151;
-    --cor-texto-principal: #f9fafb;
-    --cor-texto-secundario: #9ca3af;
+
+    /* Cores para o Tema Claro */
+    --cor-fundo-claro: #f3f4f6;       /* Um cinza bem claro (Tailwind Gray 100) */
+    --cor-painel-claro: #ffffff;      /* Branco para painéis e cabeçalho */
+    --cor-borda-clara: #e5e7eb;       /* Cor para bordas sutis (Tailwind Gray 200) */
+    --cor-input-fundo-claro: #f9fafb;  /* Fundo para os campos de input (Tailwind Gray 50) */
+    
+    --cor-texto-preto: #111827;        /* Preto/Cinza escuro para textos principais */
+    --cor-texto-cinza: #6b7280;      /* Cinza médio para textos secundários */
 }
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: var(--cor-fundo-escuro);
-    color: var(--cor-texto-principal);
+    background-color: var(--cor-fundo-claro); /* Define o fundo principal como claro */
+    color: var(--cor-texto-preto);            /* Define a cor padrão do texto como preta */
 }
 
 /* =====================================================
@@ -21,59 +24,44 @@ body {
    ===================================================== */
 .bg-custom-blue { background-color: var(--cor-azul); }
 .bg-custom-yellow { background-color: var(--cor-amarela); }
-/* .text-custom-blue é ajustado na seção de correções abaixo */
+.text-custom-blue { color: var(--cor-azul); }
 .text-custom-yellow { color: var(--cor-amarela); }
 .border-custom-yellow { border-color: var(--cor-amarela); }
 .hover\:bg-yellow-500:hover { background-color: #d49c0d; }
 
 /* =====================================================
-    SOBRESCREVE ESTILOS PARA O TEMA ESCURO
+    ESTILOS GERAIS PARA O TEMA CLARO
    ===================================================== */
 
 /* --- Tela de Login --- */
-#login-page .bg-white { background-color: var(--cor-painel-escuro); border: 1px solid var(--cor-borda-escura); }
-#login-page .text-gray-800 { color: var(--cor-texto-principal); }
-#login-page input { background-color: var(--cor-input-fundo); color: var(--cor-texto-principal); border-color: var(--cor-borda-escura); }
-#login-page input::placeholder { color: var(--cor-texto-secundario); }
+#login-page .bg-white { background-color: var(--cor-painel-claro); border: 1px solid var(--cor-borda-clara); }
+#login-page .text-gray-800 { color: var(--cor-texto-preto); }
+#login-page input { background-color: var(--cor-input-fundo-claro); color: var(--cor-texto-preto); border-color: var(--cor-borda-clara); }
+#login-page input::placeholder { color: var(--cor-texto-cinza); }
 
 /* --- Telas do Dashboard e Detalhes --- */
-#dashboard-page, #details-page { background-color: var(--cor-fundo-escuro); }
-#dashboard-page header, #details-page header { background-color: var(--cor-painel-escuro); border-bottom: 1px solid var(--cor-borda-escura); }
-.text-gray-600 { color: var(--cor-texto-secundario); }
-.text-gray-900, .text-gray-800 { color: var(--cor-texto-principal); }
-.bg-white { background-color: var(--cor-painel-escuro); border: 1px solid var(--cor-borda-escura); }
-.text-gray-500 { color: var(--cor-texto-secundario); }
-.border-gray-200 { border-color: var(--cor-borda-escura); }
-
-
-/* =====================================================
-    *** NOVA SEÇÃO DE CORREÇÃO DE CONTRASTE ***
-   ===================================================== */
-/* O texto azul escuro original (#3d357e) tem baixo contraste em fundos escuros.
-   Vamos trocá-lo pelo amarelo da sua identidade visual para garantir a legibilidade. */
-.text-custom-blue {
-    color: var(--cor-amarela);
-}
-
-/* Para links, adicionamos um efeito de brilho no hover em vez de usar outra cor. */
-a.text-custom-blue:hover, #back-to-dashboard:hover {
-    filter: brightness(1.15);
-}
-
+#dashboard-page, #details-page { background-color: var(--cor-fundo-claro); }
+#dashboard-page header, #details-page header { background-color: var(--cor-painel-claro); border-bottom: 1px solid var(--cor-borda-clara); }
+.text-gray-600 { color: var(--cor-texto-cinza); }
+.text-gray-900, .text-gray-800 { color: var(--cor-texto-preto); }
+.bg-white { background-color: var(--cor-painel-claro); border: 1px solid var(--cor-borda-clara); }
+.text-gray-500 { color: var(--cor-texto-cinza); }
+.border-gray-200 { border-color: var(--cor-borda-clara); }
 
 /* =====================================================
     ESTILOS ESPECÍFICOS DA INTERFACE
    ===================================================== */
 
 /* Filtros de Status */
-.status-filter { color: var(--cor-texto-secundario); }
-.status-filter.active { color: var(--cor-amarela); border-color: var(--cor-amarela) !important; }
-.status-filter:hover { color: var(--cor-texto-principal); border-color: var(--cor-borda-escura) !important; }
+.status-filter { color: var(--cor-texto-cinza); }
+.status-filter.active { color: var(--cor-azul); border-color: var(--cor-azul) !important; }
+.status-filter:hover { color: var(--cor-texto-preto); border-color: var(--cor-borda-clara) !important; }
 
 /* Tabela de Vistorias */
-#vistoria-list tr { border-bottom: 1px solid var(--cor-borda-escura); }
+#vistoria-list tr { border-bottom: 1px solid var(--cor-borda-clara); }
 #vistoria-list tr:last-child { border-bottom: none; }
-thead { color: var(--cor-texto-secundario); }
+thead { color: var(--cor-texto-cinza); }
+#vistoria-list .hover\:bg-gray-700\/50:hover { background-color: #f9fafb; } /* Efeito hover mais claro */
 
 /* Badges de Status (Cores) */
 .status-badge { color: white; }
@@ -95,17 +83,17 @@ thead { color: var(--cor-texto-secundario); }
     text-align: center;
 }
 .action-button:hover { filter: brightness(1.1); }
-.action-button:disabled { background-color: #4b5563; cursor: not-allowed; }
+.action-button:disabled { background-color: #9ca3af; cursor: not-allowed; }
 
 /* Modal de Nova Vistoria */
-#new-vistoria-modal .bg-white { background-color: var(--cor-painel-escuro); }
+#new-vistoria-modal .bg-white { background-color: var(--cor-painel-claro); }
 .modal-input {
     width: 100%;
     padding: 12px 16px;
     border-radius: 8px;
-    background-color: var(--cor-input-fundo);
-    border: 1px solid var(--cor-borda-escura);
-    color: var(--cor-texto-principal);
+    background-color: var(--cor-input-fundo-claro);
+    border: 1px solid var(--cor-borda-clara);
+    color: var(--cor-texto-preto);
 }
-.modal-input:focus { outline: none; ring: 2px; ring-color: var(--cor-amarela); border-color: var(--cor-amarela); }
-#new-vistoria-modal .bg-gray-50 { background-color: var(--cor-fundo-escuro); border-top: 1px solid var(--cor-borda-escura); }
+.modal-input:focus { outline: none; border-color: var(--cor-amarela); }
+#new-vistoria-modal .bg-gray-50 { background-color: #f9fafb; border-top: 1px solid var(--cor-borda-clara); }
