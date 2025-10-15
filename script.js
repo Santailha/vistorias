@@ -10,9 +10,10 @@ import {
 
 
 // =================================================================
-//  ESTADO DA APLICAÇÃO (Dados simulados)
+//  ESTADO DA APLICAÇÃO
 // =================================================================
-// No futuro, estes dados virão do Firebase Firestore
+// TODO: Substituir estes dados simulados pela chamada à API da Rede Vistorias.
+// A integração irá popular esta variável `vistorias` com os dados reais.
 let vistorias = [
     { id: 1, codigoImovel: 'SC-101', endereco: 'Rua das Flores, 123, Centro', tipo: 'Entrada', dataAgendamento: '2025-10-20', locatario: 'João da Silva', status: 'Pendente de Análise', linkRelatorio: 'https://santailha.github.io/manutencao/vistoria', history: [{date: '2025-10-18', event: 'Agendamento realizado pelo setor Administrativo.'}] },
     { id: 2, codigoImovel: 'SC-202', endereco: 'Av. Beira Mar, 456, Coqueiros', tipo: 'Saída', dataAgendamento: '2025-10-22', locatario: 'Maria Oliveira', status: 'Em Contestação', linkRelatorio: '#', history: [{date: '2025-10-21', event: 'Laudo recebido.'}, {date: '2025-10-22', event: 'Contestação recebida do locatário.'}] },
@@ -34,10 +35,6 @@ const userEmailDisplays = document.querySelectorAll('.user-email-display');
 const vistoriaList = document.getElementById('vistoria-list');
 const statusFilters = document.querySelectorAll('.status-filter');
 const backToDashboardBtn = document.getElementById('back-to-dashboard');
-const newVistoriaBtn = document.getElementById('new-vistoria-btn');
-const newVistoriaModal = document.getElementById('new-vistoria-modal');
-const cancelModalBtn = document.getElementById('cancel-modal-btn');
-const newVistoriaForm = document.getElementById('new-vistoria-form');
 
 
 // =================================================================
@@ -137,11 +134,6 @@ function showDetailsPage() {
     populateDetailsPage();
 }
 
-function showModal(show) {
-    newVistoriaModal.classList.toggle('hidden', !show);
-    if (!show) newVistoriaForm.reset();
-}
-
 
 // =================================================================
 //  LÓGICA DE AUTENTICAÇÃO E EVENTOS
@@ -189,27 +181,6 @@ vistoriaList.addEventListener('click', e => {
 // Evento para voltar ao dashboard
 backToDashboardBtn.addEventListener('click', () => showDashboard(auth.currentUser.email));
 
-// Eventos do Modal de Nova Vistoria
-newVistoriaBtn.addEventListener('click', () => showModal(true));
-cancelModalBtn.addEventListener('click', () => showModal(false));
-newVistoriaForm.addEventListener('submit', e => {
-    e.preventDefault();
-    const formData = new FormData(newVistoriaForm);
-    const newVistoria = {
-        id: vistorias.length + 1,
-        codigoImovel: formData.get('codigoImovel'),
-        endereco: formData.get('endereco'),
-        tipo: formData.get('tipo'),
-        dataAgendamento: formData.get('dataAgendamento'),
-        locatario: formData.get('locatario'),
-        linkRelatorio: formData.get('linkRelatorio') || '#',
-        status: 'Agendada',
-        history: [{ date: new Date().toISOString().split('T')[0], event: 'Agendamento criado no sistema.' }]
-    };
-    vistorias.unshift(newVistoria); // Adiciona no início da lista
-    renderVistorias();
-    showModal(false);
-});
 
 // Inicialização da primeira renderização
 document.addEventListener('DOMContentLoaded', () => {
