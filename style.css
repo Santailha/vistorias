@@ -1,12 +1,3 @@
-Com certeza. Você está certo, a cor cinza claro no cabeçalho ainda não oferece o contraste ideal. Para resolver isso de vez, farei com que **todo o texto** dentro da tabela, incluindo o cabeçalho e as linhas de dados, use a cor branca principal (`#f9fafb`).
-
-Isso garantirá a melhor legibilidade possível em todo o painel.
-
-Nenhuma alteração é necessária nos arquivos `index.html` ou `script.js`. **Basta substituir o conteúdo do seu arquivo `style.css`** pelo código abaixo, que contém a correção final.
-
-### Arquivo `style.css` (Corrigido para Fontes Claras na Tabela)
-
-```css
 /* :root contém as variáveis de cores para fácil customização */
 :root {
     --cor-azul: #3d357e;
@@ -111,4 +102,3 @@ thead, #vistoria-list td {
 }
 .modal-input:focus { outline: none; ring: 2px; ring-color: var(--cor-amarela); border-color: var(--cor-amarela); }
 #new-vistoria-modal .bg-gray-50 { background-color: var(--cor-fundo-escuro); border-top: 1px solid var(--cor-borda-escura); }
-```
