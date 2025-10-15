@@ -21,7 +21,7 @@ body {
    ===================================================== */
 .bg-custom-blue { background-color: var(--cor-azul); }
 .bg-custom-yellow { background-color: var(--cor-amarela); }
-.text-custom-blue { color: var(--cor-azul); }
+/* .text-custom-blue é ajustado na seção de correções abaixo */
 .text-custom-yellow { color: var(--cor-amarela); }
 .border-custom-yellow { border-color: var(--cor-amarela); }
 .hover\:bg-yellow-500:hover { background-color: #d49c0d; }
@@ -45,7 +45,25 @@ body {
 .text-gray-500 { color: var(--cor-texto-secundario); }
 .border-gray-200 { border-color: var(--cor-borda-escura); }
 
-/* --- Estilos Específicos da Nova Interface --- */
+
+/* =====================================================
+    *** NOVA SEÇÃO DE CORREÇÃO DE CONTRASTE ***
+   ===================================================== */
+/* O texto azul escuro original (#3d357e) tem baixo contraste em fundos escuros.
+   Vamos trocá-lo pelo amarelo da sua identidade visual para garantir a legibilidade. */
+.text-custom-blue {
+    color: var(--cor-amarela);
+}
+
+/* Para links, adicionamos um efeito de brilho no hover em vez de usar outra cor. */
+a.text-custom-blue:hover, #back-to-dashboard:hover {
+    filter: brightness(1.15);
+}
+
+
+/* =====================================================
+    ESTILOS ESPECÍFICOS DA INTERFACE
+   ===================================================== */
 
 /* Filtros de Status */
 .status-filter { color: var(--cor-texto-secundario); }
