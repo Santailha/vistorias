@@ -20,13 +20,18 @@ body {
 }
 
 /* =====================================================
-    ESTILOS GERAIS DO TEMA ESCURO (Mantidos)
+    ESTILOS GERAIS DO TEMA ESCURO
    ===================================================== */
 .bg-custom-blue { background-color: var(--cor-azul); }
-.bg-custom-yellow { background-color: var(--cor-amarela); }
 .text-custom-yellow { color: var(--cor-amarela); }
 .border-custom-yellow { border-color: var(--cor-amarela); }
 .hover\:bg-yellow-500:hover { background-color: #d49c0d; }
+
+/* AJUSTE DE LEGIBILIDADE: Garante que botões e elementos com fundo amarelo tenham texto escuro */
+.bg-custom-yellow {
+    background-color: var(--cor-amarela);
+    color: var(--cor-texto-preto) !important; /* Usamos !important para sobrescrever classes do Tailwind como 'text-white' */
+}
 
 #login-page .bg-white { background-color: var(--cor-painel-escuro); border: 1px solid var(--cor-borda-escura); }
 #login-page .text-gray-800 { color: var(--cor-texto-principal); }
@@ -36,7 +41,6 @@ body {
 #dashboard-page header, #details-page header { background-color: var(--cor-painel-escuro); border-bottom: 1px solid var(--cor-borda-escura); }
 .text-gray-600 { color: var(--cor-texto-secundario); }
 .text-gray-900, .text-gray-800 { color: var(--cor-texto-principal); }
-/* Remove a regra genérica para .bg-white para não interferir com a regra específica abaixo */
 .text-gray-500 { color: var(--cor-texto-secundario); }
 .border-gray-200 { border-color: var(--cor-borda-escura); }
 .text-custom-blue { color: var(--cor-amarela); }
