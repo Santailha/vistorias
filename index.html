@@ -20,66 +20,145 @@
                 <h1 id="logo-text" class="text-3xl font-bold text-custom-blue" style="display: none;">Análise de Vistoria</h1>
             </div>
             <h2 class="text-2xl font-bold text-center text-gray-800">Acesse sua conta</h2>
-            
             <form id="login-form" class="mt-8 space-y-6">
                 <div class="space-y-4">
-                    <div>
-                        <label for="email" class="sr-only">Email</label>
-                        <input id="email" name="email" type="email" autocomplete="email" required class="w-full px-4 py-3 text-gray-700 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-yellow focus:border-transparent" placeholder="Seu e-mail">
-                    </div>
-                    <div>
-                        <label for="password" class="sr-only">Senha</label>
-                        <input id="password" name="password" type="password" autocomplete="current-password" required class="w-full px-4 py-3 text-gray-700 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-yellow focus:border-transparent" placeholder="Sua senha">
-                    </div>
+                    <input id="email" name="email" type="email" autocomplete="email" required class="w-full px-4 py-3 text-gray-700 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-yellow focus:border-transparent" placeholder="Seu e-mail">
+                    <input id="password" name="password" type="password" autocomplete="current-password" required class="w-full px-4 py-3 text-gray-700 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-yellow focus:border-transparent" placeholder="Sua senha">
                 </div>
-                <div class="flex items-center justify-between">
-                    <a href="#" class="text-sm font-medium text-custom-blue hover:text-custom-yellow">Esqueceu sua senha?</a>
-                </div>
-                <div>
-                    <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent text-lg font-semibold rounded-lg text-white bg-custom-blue hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue transition duration-300 ease-in-out">
-                        Entrar
-                    </button>
-                </div>
+                <div class="flex items-center justify-between"><a href="#" class="text-sm font-medium text-custom-blue hover:text-custom-yellow">Esqueceu sua senha?</a></div>
+                <div><button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent text-lg font-semibold rounded-lg text-white bg-custom-blue hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue transition duration-300 ease-in-out">Entrar</button></div>
             </form>
         </div>
     </div>
 
-    <div id="dashboard-page" class="hidden min-h-screen bg-gray-50">
+    <div id="dashboard-page" class="hidden min-h-screen">
         <header class="bg-white shadow-md">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-20">
-                    <div class="flex-shrink-0">
-                        <img class="h-12" src="logo.png" alt="Logo da Empresa" onerror="this.style.display='none'">
-                    </div>
+                    <div class="flex-shrink-0"><img class="h-12" src="logo.png" alt="Logo da Empresa" onerror="this.style.display='none'"></div>
                     <div class="flex items-center">
-                        <span id="user-email-display" class="mr-4 font-medium text-gray-600 hidden sm:block"></span>
-                        <button id="logout-button" class="px-4 py-2 text-sm font-medium text-white bg-custom-blue rounded-lg hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue">
-                            Sair
-                        </button>
+                        <span class="mr-4 font-medium text-gray-600 hidden sm:block user-email-display"></span>
+                        <button class="px-4 py-2 text-sm font-medium text-white bg-custom-blue rounded-lg hover:bg-opacity-90 logout-button">Sair</button>
                     </div>
                 </div>
             </div>
         </header>
+
         <main class="py-10">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-center mb-8">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
                     <h1 class="text-3xl font-bold text-gray-900">Painel de Vistorias</h1>
-                    <button class="px-6 py-3 text-white font-semibold bg-custom-yellow rounded-lg shadow-md hover:bg-yellow-500 transition duration-300">
-                        + Nova Vistoria
+                    <button id="new-vistoria-btn" class="px-6 py-3 text-white font-semibold bg-custom-yellow rounded-lg shadow-md hover:bg-yellow-500 transition duration-300 w-full sm:w-auto">
+                        + Agendar Nova Vistoria
                     </button>
                 </div>
-                <div class="bg-white p-8 rounded-2xl shadow-lg">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-6">Vistorias Recentes</h2>
-                    <div class="text-center text-gray-500 py-12">
-                        <p>Nenhuma vistoria encontrada.</p>
+
+                <div class="mb-6">
+                    <div class="flex flex-wrap gap-2 border-b border-gray-200">
+                        <button class="status-filter py-2 px-4 text-sm font-medium text-center rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 active" data-status="Todos">Todos</button>
+                        <button class="status-filter py-2 px-4 text-sm font-medium text-center rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300" data-status="Pendente de Análise">Pendente de Análise</button>
+                        <button class="status-filter py-2 px-4 text-sm font-medium text-center rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300" data-status="Em Contestação">Em Contestação</button>
+                        <button class="status-filter py-2 px-4 text-sm font-medium text-center rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300" data-status="Concluída">Concluídas</button>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg overflow-x-auto">
+                    <table class="w-full text-sm text-left">
+                        <thead class="text-xs uppercase">
+                            <tr>
+                                <th scope="col" class="py-3 px-6">Cód. Imóvel</th>
+                                <th scope="col" class="py-3 px-6 hidden md:table-cell">Endereço</th>
+                                <th scope="col" class="py-3 px-6">Tipo</th>
+                                <th scope="col" class="py-3 px-6 hidden sm:table-cell">Agendamento</th>
+                                <th scope="col" class="py-3 px-6">Status</th>
+                                <th scope="col" class="py-3 px-6 text-center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="vistoria-list">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="details-page" class="hidden min-h-screen">
+         <header class="bg-white shadow-md">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex items-center justify-between h-20"><div class="flex-shrink-0"><img class="h-12" src="logo.png" alt="Logo da Empresa" onerror="this.style.display='none'"></div><div class="flex items-center"><span class="mr-4 font-medium text-gray-600 hidden sm:block user-email-display"></span><button class="px-4 py-2 text-sm font-medium text-white bg-custom-blue rounded-lg hover:bg-opacity-90 logout-button">Sair</button></div></div></div>
+        </header>
+
+        <main class="py-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <button id="back-to-dashboard" class="mb-6 text-sm font-medium text-custom-blue hover:underline">← Voltar para o Painel</button>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2 space-y-8">
+                        <div class="bg-white p-8 rounded-2xl shadow-lg">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h2 class="text-2xl font-bold text-gray-900" id="details-codigo"></h2>
+                                    <p class="text-gray-500 mt-1" id="details-endereco"></p>
+                                </div>
+                                <span class="text-xs font-semibold py-1 px-3 rounded-full" id="details-status-badge"></span>
+                            </div>
+                            <div class="border-t border-gray-200 my-6"></div>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-6 text-sm">
+                                <div><p class="text-gray-500">Tipo de Vistoria</p><p class="font-semibold text-gray-800" id="details-tipo"></p></div>
+                                <div><p class="text-gray-500">Data Agendada</p><p class="font-semibold text-gray-800" id="details-data"></p></div>
+                                <div><p class="text-gray-500">Locatário</p><p class="font-semibold text-gray-800" id="details-locatario"></p></div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-8 rounded-2xl shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Painel de Ações</h3>
+                            <p class="text-sm text-gray-500 mb-6">Selecione a próxima etapa para esta vistoria.</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <a id="action-download-report" href="#" target="_blank" class="action-button bg-gray-600">Baixar Relatório PDF</a>
+                                <button id="action-request-correction" class="action-button bg-orange-500">Solicitar Correção</button>
+                                <button id="action-send-maintenance" class="action-button bg-red-600">Encaminhar para Manutenção</button>
+                                <button id="action-upload-bitrix" class="action-button bg-blue-600">Anexar Laudo no Bitrix</button>
+                                <button id="action-approve" class="action-button bg-green-600 col-span-1 sm:col-span-2">Aprovar e Finalizar Vistoria</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-2xl shadow-lg">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-6">Histórico de Eventos</h3>
+                        <ul id="details-history" class="space-y-4 text-sm text-gray-600 border-l-2 border-gray-200 pl-4">
+                           </ul>
                     </div>
                 </div>
             </div>
         </main>
     </div>
 
+    <div id="new-vistoria-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg">
+            <form id="new-vistoria-form">
+                <div class="p-8">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">Agendar Nova Vistoria</h3>
+                    <div class="space-y-4">
+                        <input name="codigoImovel" required class="modal-input" placeholder="Código do Imóvel (ex: SC-123)">
+                        <input name="endereco" required class="modal-input" placeholder="Endereço Completo do Imóvel">
+                        <select name="tipo" required class="modal-input">
+                            <option value="" disabled selected>Selecione o Tipo de Vistoria</option>
+                            <option value="Entrada">Vistoria de Entrada</option>
+                            <option value="Saída">Vistoria de Saída</option>
+                        </select>
+                        <input name="locatario" required class="modal-input" placeholder="Nome do Locatário">
+                        <input name="dataAgendamento" type="date" required class="modal-input">
+                        <input name="linkRelatorio" class="modal-input" placeholder="Link para o relatório (opcional)">
+                    </div>
+                </div>
+                <div class="bg-gray-50 p-4 flex justify-end gap-4 rounded-b-2xl">
+                    <button type="button" id="cancel-modal-btn" class="px-6 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300">Cancelar</button>
+                    <button type="submit" class="px-6 py-2 text-sm font-medium text-white bg-custom-blue rounded-lg hover:bg-opacity-90">Salvar Agendamento</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
     <script type="module" src="firebase-config.js"></script>
     <script type="module" src="script.js"></script>
-
 </body>
 </html>
