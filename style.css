@@ -1,103 +1,127 @@
-/* :root contém as variáveis de cores para fácil customização */
+/* ====================================================================
+    RAIZ DE VARIÁVEIS DE COR (PALETA DE TEMA ESCURO)
+   ==================================================================== */
 :root {
-    --cor-azul: #3d357e;
-    --cor-amarela: #edae0f;
-    --cor-fundo-escuro: #111827;
-    --cor-painel-escuro: #1f2937;
-    --cor-borda-escura: #374151;
-    --cor-input-fundo: #374151;
-    --cor-texto-principal: #f9fafb;
-    --cor-texto-secundario: #9ca3af;
-    --cor-texto-preto: #111827;      /* Cor preta para o texto */
-    --cor-painel-cinza-claro: #f3f4f6; /* Cinza bem claro para o painel */
-    --cor-borda-clara: #d1d5db;      /* Borda para o painel claro */
+    /* Cores da Marca */
+    --cor-primaria: #edae0f; /* Amarelo/Laranja da Santa Ilha */
+    --cor-secundaria: #3d357e; /* Azul da Santa Ilha */
+
+    /* Paleta do Tema Escuro */
+    --cor-fundo: #111827;      /* Fundo principal (Cinza bem escuro / quase preto) */
+    --cor-painel: #1f2937;    /* Fundo de painéis, cards, header (Cinza escuro) */
+    --cor-borda: #374151;     /* Cor de bordas e divisórias */
+    
+    /* Cores de Texto */
+    --cor-texto-principal: #f9fafb;  /* Texto principal (Branco suave) */
+    --cor-texto-secundario: #9ca3af; /* Texto secundário, placeholders (Cinza claro) */
+    --cor-texto-preto: #111827;       /* Texto para usar sobre fundos claros/amarelos */
+
+    /* Cores Semânticas para Status */
+    --cor-status-pendente: #f59e0b;  /* Ambar */
+    --cor-status-contestacao: #ef4444; /* Vermelho */
+    --cor-status-concluida: #22c55e;   /* Verde */
+    --cor-status-agendada: #3b82f6;    /* Azul */
 }
 
+/* ====================================================================
+    ESTILOS GLOBAIS E DE RESET
+   ==================================================================== */
 body {
     font-family: 'Inter', sans-serif;
-    background-color: var(--cor-fundo-escuro);
+    background-color: var(--cor-fundo);
     color: var(--cor-texto-principal);
 }
 
-/* =====================================================
-    ESTILOS GERAIS DO TEMA ESCURO
-   ===================================================== */
-.bg-custom-blue { background-color: var(--cor-azul); }
-.text-custom-yellow { color: var(--cor-amarela); }
-.border-custom-yellow { border-color: var(--cor-amarela); }
-.hover\:bg-yellow-500:hover { background-color: #d49c0d; }
-
-/* AJUSTE DE LEGIBILIDADE: Garante que botões e elementos com fundo amarelo tenham texto escuro */
-.bg-custom-yellow {
-    background-color: var(--cor-amarela);
-    color: var(--cor-texto-preto) !important; /* Usamos !important para sobrescrever classes do Tailwind como 'text-white' */
+/* ====================================================================
+    CLASSES DE UTILIDADE (BASEADAS NAS VARIÁVEIS)
+   ==================================================================== */
+.bg-custom-blue { background-color: var(--cor-secundaria); }
+.bg-custom-yellow { 
+    background-color: var(--cor-primaria); 
+    color: var(--cor-texto-preto); /* Garante legibilidade no botão amarelo */
 }
-
-#login-page .bg-white { background-color: var(--cor-painel-escuro); border: 1px solid var(--cor-borda-escura); }
-#login-page .text-gray-800 { color: var(--cor-texto-principal); }
-#login-page input { background-color: var(--cor-input-fundo); color: var(--cor-texto-principal); border-color: var(--cor-borda-escura); }
-#login-page input::placeholder { color: var(--cor-texto-secundario); }
-
-#dashboard-page header, #details-page header { background-color: var(--cor-painel-escuro); border-bottom: 1px solid var(--cor-borda-escura); }
-.text-gray-600 { color: var(--cor-texto-secundario); }
-.text-gray-900, .text-gray-800 { color: var(--cor-texto-principal); }
-.text-gray-500 { color: var(--cor-texto-secundario); }
-.border-gray-200 { border-color: var(--cor-borda-escura); }
-.text-custom-blue { color: var(--cor-amarela); }
-a.text-custom-blue:hover, #back-to-dashboard:hover { filter: brightness(1.15); }
-
-.status-filter { color: var(--cor-texto-secundario); }
-.status-filter.active { color: var(--cor-amarela); border-color: var(--cor-amarela) !important; }
-.status-filter:hover { color: var(--cor-texto-principal); border-color: var(--cor-borda-escura) !important; }
-
-.status-badge { color: white; }
-.status-Pendente { background-color: #d97706; }
-.status-Contestacao { background-color: #dc2626; }
-.status-Concluida { background-color: #16a34a; }
-.status-Agendada { background-color: #2563eb; }
-
-/* Modal, botões, etc, continuam com tema escuro */
-#details-page .bg-white, #new-vistoria-modal .bg-white { background-color: var(--cor-painel-escuro); border: 1px solid var(--cor-borda-escura);}
-.action-button { display: flex; justify-content: center; align-items: center; padding: 12px 16px; border-radius: 8px; color: white; font-weight: 600; transition: filter 0.2s; text-align: center; }
-.action-button:hover { filter: brightness(1.1); }
-.action-button:disabled { background-color: #4b5563; cursor: not-allowed; }
-.modal-input { width: 100%; padding: 12px 16px; border-radius: 8px; background-color: var(--cor-input-fundo); border: 1px solid var(--cor-borda-escura); color: var(--cor-texto-principal); }
-.modal-input:focus { outline: none; ring: 2px; ring-color: var(--cor-amarela); border-color: var(--cor-amarela); }
-#new-vistoria-modal .bg-gray-50 { background-color: var(--cor-fundo-escuro); border-top: 1px solid var(--cor-borda-escura); }
-
+.text-custom-yellow { color: var(--cor-primaria); }
+.border-custom-yellow { border-color: var(--cor-primaria); }
+.hover\:bg-yellow-500:hover { background-color: var(--cor-primaria); filter: brightness(1.1); }
+.text-custom-blue { color: var(--cor-primaria); } /* Alterado para amarelo para consistência */
 
 /* ====================================================================
-    *** REGRA ESPECÍFICA PARA O PAINEL DA TABELA DE VISTORIAS ***
+    ESTILOS DAS PÁGINAS E COMPONENTES
    ==================================================================== */
-/* Esta regra se aplica somente ao painel que contém a tabela no dashboard */
-#dashboard-page main .bg-white {
-    background-color: var(--cor-painel-cinza-claro) !important; /* Fundo CINZA CLARO */
-    border: 1px solid var(--cor-borda-clara);
+
+/* --- PÁGINA DE LOGIN --- */
+#login-page .bg-white { background-color: var(--cor-painel); }
+#login-page .text-gray-800 { color: var(--cor-texto-principal); }
+#login-page input { 
+    background-color: var(--cor-fundo); 
+    color: var(--cor-texto-principal); 
+    border-color: var(--cor-borda); 
+}
+#login-page input::placeholder { color: var(--cor-texto-secundario); }
+#login-page input:focus {
+    outline: none;
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 2px var(--cor-primaria);
 }
 
-/* Ajusta todos os textos DENTRO do painel da tabela para serem pretos */
-#dashboard-page main .bg-white,
-#dashboard-page main .bg-white td,
-#dashboard-page main .bg-white th {
-    color: var(--cor-texto-preto);
+/* --- CABEÇALHO --- */
+header {
+    background-color: var(--cor-painel);
+    border-bottom: 1px solid var(--cor-borda);
 }
 
-/* Deixa o cabeçalho da tabela com um cinza escuro para diferenciar */
-#dashboard-page main .bg-white thead {
-    color: #6b7280; 
+/* --- TEXTOS GERAIS --- */
+.text-gray-900, .text-gray-800 { color: var(--cor-texto-principal); }
+.text-gray-600, .text-gray-500 { color: var(--cor-texto-secundario); }
+.border-gray-200 { border-color: var(--cor-borda); }
+a:hover, button:hover { filter: brightness(1.15); }
+
+/* --- PAINEL (DASHBOARD E DETALHES) --- */
+.bg-white { /* Esta classe é usada para todos os painéis */
+    background-color: var(--cor-painel) !important;
+    color: var(--cor-texto-principal) !important;
 }
 
-/* Ajusta a borda entre as linhas da tabela */
-#dashboard-page main .bg-white tr {
-    border-bottom: 1px solid var(--cor-borda-clara);
-}
+/* --- TABELA DE VISTORIAS --- */
+table { width: 100%; }
+thead { color: var(--cor-texto-secundario); text-transform: uppercase; font-size: 0.75rem; }
+th, td { padding: 1rem 1.5rem; }
+tbody tr { border-bottom: 1px solid var(--cor-borda); }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background-color: rgba(255, 255, 255, 0.05); }
 
-/* Ajusta o link "Ver Detalhes" para a cor azul da sua marca, que tem bom contraste */
-#dashboard-page main .bg-white .text-custom-yellow {
-    color: var(--cor-azul) !important;
-}
+/* --- FILTROS DE STATUS --- */
+.status-filter { color: var(--cor-texto-secundario); border-bottom: 2px solid transparent; }
+.status-filter.active { color: var(--cor-primaria); border-color: var(--cor-primaria) !important; }
+.status-filter:hover { color: var(--cor-texto-principal); }
 
-/* Ajusta o efeito hover para as linhas da tabela */
-#dashboard-page main .bg-white tr.hover\:bg-gray-700\/50:hover {
-    background-color: #e5e7eb; /* um cinza um pouco mais escuro */
+/* --- BADGES DE STATUS --- */
+.status-badge { color: white; font-weight: 600; }
+.status-Pendente { background-color: var(--cor-status-pendente); }
+.status-Contestacao { background-color: var(--cor-status-contestacao); }
+.status-Concluida { background-color: var(--cor-status-concluida); }
+.status-Agendada { background-color: var(--cor-status-agendada); }
+
+/* --- BOTÕES DE AÇÃO --- */
+.action-button { 
+    display: flex; justify-content: center; align-items: center; 
+    padding: 12px 16px; border-radius: 8px; color: white; 
+    font-weight: 600; transition: filter 0.2s; text-align: center; 
+}
+.action-button:hover { filter: brightness(1.1); }
+.action-button:disabled { background-color: #4b5563; cursor: not-allowed; }
+
+/* --- MODAL --- */
+#new-vistoria-modal .bg-white { background-color: var(--cor-painel); }
+#new-vistoria-modal .bg-gray-50 { background-color: var(--cor-fundo); border-top: 1px solid var(--cor-borda); }
+.modal-input { 
+    width: 100%; padding: 12px 16px; border-radius: 8px; 
+    background-color: var(--cor-fundo); 
+    border: 1px solid var(--cor-borda); 
+    color: var(--cor-texto-principal); 
+}
+.modal-input:focus {
+    outline: none;
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 2px var(--cor-primaria);
 }
