@@ -1,0 +1,14 @@
+/* Definindo a fonte padrão e as cores do projeto */
+body {
+    font-family: 'Inter', sans-serif;
+    --cor-azul: #3d357e;
+    --cor-amarela: #edae0f;
+}
+
+/* Classes customizadas para usar as cores do projeto com Tailwind */
+.bg-custom-blue { background-color: var(--cor-azul); }
+.bg-custom-yellow { background-color: var(--cor-amarela); }
+.text-custom-blue { color: var(--cor-azul); }
+.text-custom-yellow { color: var(--cor-amarela); }
+.border-custom-yellow { border-color: var(--cor-amarela); }
+.hover\:bg-yellow-500:hover { background-color: #d49c0d; } /* Um tom mais escuro para o hover */
