@@ -1,5 +1,5 @@
 /* ====================================================================
-    RAIZ DE VARIÁVEIS DE COR (PALETA DE TEMA ESCURO)
+    RAIZ DE VARIÁVEIS DE COR (PALETA DE TEMA ESCURO REFINADA)
    ==================================================================== */
 :root {
     /* Cores da Marca */
@@ -11,9 +11,9 @@
     --cor-painel: #1f2937;    /* Fundo de painéis, cards, header (Cinza escuro) */
     --cor-borda: #374151;     /* Cor de bordas e divisórias */
     
-    /* Cores de Texto */
-    --cor-texto-principal: #f9fafb;  /* Texto principal (Branco suave) */
-    --cor-texto-secundario: #9ca3af; /* Texto secundário, placeholders (Cinza claro) */
+    /* Cores de Texto (AJUSTE DE CLARIDADE) */
+    --cor-texto-principal: #ffffff;  /* Texto principal (Branco puro) */
+    --cor-texto-secundario: #d1d5db; /* Texto secundário (Cinza bem claro) */
     --cor-texto-preto: #111827;       /* Texto para usar sobre fundos claros/amarelos */
 
     /* Cores Semânticas para Status */
