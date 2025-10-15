@@ -8,8 +8,9 @@
     --cor-input-fundo: #374151;
     --cor-texto-principal: #f9fafb;
     --cor-texto-secundario: #9ca3af;
-    --cor-texto-preto: #111827; /* Cor preta para o texto */
-    --cor-painel-claro: #ffffff; /* Cor branca para o painel */
+    --cor-texto-preto: #111827;      /* Cor preta para o texto */
+    --cor-painel-cinza-claro: #f3f4f6; /* Cinza bem claro para o painel */
+    --cor-borda-clara: #d1d5db;      /* Borda para o painel claro */
 }
 
 body {
@@ -19,7 +20,7 @@ body {
 }
 
 /* =====================================================
-    CLASSES DE UTILIDADE E CORES DO PROJETO
+    ESTILOS GERAIS DO TEMA ESCURO (Mantidos)
    ===================================================== */
 .bg-custom-blue { background-color: var(--cor-azul); }
 .bg-custom-yellow { background-color: var(--cor-amarela); }
@@ -27,70 +28,72 @@ body {
 .border-custom-yellow { border-color: var(--cor-amarela); }
 .hover\:bg-yellow-500:hover { background-color: #d49c0d; }
 
-/* =====================================================
-    TEMA ESCURO (PADRÃO)
-   ===================================================== */
 #login-page .bg-white { background-color: var(--cor-painel-escuro); border: 1px solid var(--cor-borda-escura); }
 #login-page .text-gray-800 { color: var(--cor-texto-principal); }
 #login-page input { background-color: var(--cor-input-fundo); color: var(--cor-texto-principal); border-color: var(--cor-borda-escura); }
 #login-page input::placeholder { color: var(--cor-texto-secundario); }
-#dashboard-page, #details-page { background-color: var(--cor-fundo-escuro); }
+
 #dashboard-page header, #details-page header { background-color: var(--cor-painel-escuro); border-bottom: 1px solid var(--cor-borda-escura); }
 .text-gray-600 { color: var(--cor-texto-secundario); }
 .text-gray-900, .text-gray-800 { color: var(--cor-texto-principal); }
-.bg-white { background-color: var(--cor-painel-escuro); border: 1px solid var(--cor-borda-escura); }
+/* Remove a regra genérica para .bg-white para não interferir com a regra específica abaixo */
 .text-gray-500 { color: var(--cor-texto-secundario); }
 .border-gray-200 { border-color: var(--cor-borda-escura); }
 .text-custom-blue { color: var(--cor-amarela); }
 a.text-custom-blue:hover, #back-to-dashboard:hover { filter: brightness(1.15); }
 
-/* Filtros de Status */
 .status-filter { color: var(--cor-texto-secundario); }
 .status-filter.active { color: var(--cor-amarela); border-color: var(--cor-amarela) !important; }
 .status-filter:hover { color: var(--cor-texto-principal); border-color: var(--cor-borda-escura) !important; }
 
-/* Badges de Status (Cores) - Mantidos para visibilidade */
 .status-badge { color: white; }
 .status-Pendente { background-color: #d97706; }
 .status-Contestacao { background-color: #dc2626; }
 .status-Concluida { background-color: #16a34a; }
 .status-Agendada { background-color: #2563eb; }
 
-/* Botões e Modal */
-.action-button, .modal-input { /* Estilos genéricos mantidos */ }
+/* Modal, botões, etc, continuam com tema escuro */
+#details-page .bg-white, #new-vistoria-modal .bg-white { background-color: var(--cor-painel-escuro); border: 1px solid var(--cor-borda-escura);}
 .action-button { display: flex; justify-content: center; align-items: center; padding: 12px 16px; border-radius: 8px; color: white; font-weight: 600; transition: filter 0.2s; text-align: center; }
 .action-button:hover { filter: brightness(1.1); }
 .action-button:disabled { background-color: #4b5563; cursor: not-allowed; }
-#new-vistoria-modal .bg-white { background-color: var(--cor-painel-escuro); }
 .modal-input { width: 100%; padding: 12px 16px; border-radius: 8px; background-color: var(--cor-input-fundo); border: 1px solid var(--cor-borda-escura); color: var(--cor-texto-principal); }
 .modal-input:focus { outline: none; ring: 2px; ring-color: var(--cor-amarela); border-color: var(--cor-amarela); }
 #new-vistoria-modal .bg-gray-50 { background-color: var(--cor-fundo-escuro); border-top: 1px solid var(--cor-borda-escura); }
 
-/* =====================================================
-    *** CORREÇÃO PARA O PAINEL DA TABELA ***
-   ===================================================== */
-/* Esta nova regra afeta apenas o painel com a classe 'light-theme-panel' */
-.light-theme-panel {
-    background-color: var(--cor-painel-claro) !important; /* Fundo BRANCO */
-    color: var(--cor-texto-preto) !important; /* Fonte PRETA */
-    border: 1px solid #e5e7eb;
+
+/* ====================================================================
+    *** REGRA ESPECÍFICA PARA O PAINEL DA TABELA DE VISTORIAS ***
+   ==================================================================== */
+/* Esta regra se aplica somente ao painel que contém a tabela no dashboard */
+#dashboard-page main .bg-white {
+    background-color: var(--cor-painel-cinza-claro) !important; /* Fundo CINZA CLARO */
+    border: 1px solid var(--cor-borda-clara);
 }
 
-/* Ajusta os textos e bordas DENTRO do painel claro */
-.light-theme-panel thead {
-    color: #6b7280; /* Um cinza escuro para o cabeçalho, para diferenciar */
+/* Ajusta todos os textos DENTRO do painel da tabela para serem pretos */
+#dashboard-page main .bg-white,
+#dashboard-page main .bg-white td,
+#dashboard-page main .bg-white th {
+    color: var(--cor-texto-preto);
 }
 
-.light-theme-panel tbody,
-.light-theme-panel td {
-    color: var(--cor-texto-preto) !important; /* Garante que o texto do corpo seja PRETO */
+/* Deixa o cabeçalho da tabela com um cinza escuro para diferenciar */
+#dashboard-page main .bg-white thead {
+    color: #6b7280; 
 }
 
-.light-theme-panel tr {
-    border-bottom: 1px solid #e5e7eb !important; /* Borda clara entre as linhas */
+/* Ajusta a borda entre as linhas da tabela */
+#dashboard-page main .bg-white tr {
+    border-bottom: 1px solid var(--cor-borda-clara);
 }
 
-/* Ajusta o link "Ver Detalhes" para ter a cor azul da sua marca, que contrasta bem com branco */
-.light-theme-panel .text-custom-yellow {
+/* Ajusta o link "Ver Detalhes" para a cor azul da sua marca, que tem bom contraste */
+#dashboard-page main .bg-white .text-custom-yellow {
     color: var(--cor-azul) !important;
+}
+
+/* Ajusta o efeito hover para as linhas da tabela */
+#dashboard-page main .bg-white tr.hover\:bg-gray-700\/50:hover {
+    background-color: #e5e7eb; /* um cinza um pouco mais escuro */
 }
