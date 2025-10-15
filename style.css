@@ -6,14 +6,14 @@
     --cor-painel-escuro: #1f2937;
     --cor-borda-escura: #374151;
     --cor-input-fundo: #374151;
-    --cor-texto-principal: #f9fafb;   /* Cor branca principal */
+    --cor-texto-principal: #f9fafb;   /* Cor branca principal (para máximo contraste) */
     --cor-texto-secundario: #9ca3af;  /* Cor cinza claro para textos de apoio */
 }
 
 body {
     font-family: 'Inter', sans-serif;
     background-color: var(--cor-fundo-escuro);
-    color: var(--cor-texto-principal); /* Define a cor padrão do texto como branca */
+    color: var(--cor-texto-principal);
 }
 
 /* =====================================================
@@ -62,18 +62,20 @@ a.text-custom-blue:hover, #back-to-dashboard:hover { filter: brightness(1.15); }
 #vistoria-list tr { border-bottom: 1px solid var(--cor-borda-escura); }
 #vistoria-list tr:last-child { border-bottom: none; }
 
-/* *** CORREÇÃO DE LEGIBILIDADE APLICADA AQUI *** */
-/* Garante que TODO o texto na tabela (cabeçalho e corpo) seja branco para máximo contraste */
-thead, #vistoria-list td {
-    color: var(--cor-texto-principal);
+/* *** CORREÇÃO DEFINITIVA DE LEGIBILIDADE APLICADA AQUI *** */
+/* Força TODO o texto dentro da tabela (cabeçalho e corpo) a ser BRANCO. */
+/* Isso proporciona o máximo contraste contra o fundo escuro do painel. */
+.w-full.text-sm.text-left thead,
+.w-full.text-sm.text-left tbody {
+    color: var(--cor-texto-principal); /* Garante a cor branca principal */
 }
 
 /* Badges de Status (Cores) */
 .status-badge { color: white; }
-.status-Pendente { background-color: #d97706; } /* Ambar 600 */
-.status-Contestacao { background-color: #dc2626; } /* Vermelho 600 */
-.status-Concluida { background-color: #16a34a; } /* Verde 600 */
-.status-Agendada { background-color: #2563eb; } /* Azul 600 */
+.status-Pendente { background-color: #d97706; }
+.status-Contestacao { background-color: #dc2626; }
+.status-Concluida { background-color: #16a34a; }
+.status-Agendada { background-color: #2563eb; }
 
 /* Botões de Ação na Tela de Detalhes */
 .action-button { 
