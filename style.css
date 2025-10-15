@@ -1,27 +1,24 @@
 /* :root contém as variáveis de cores para fácil customização */
 :root {
-    /* Cores Originais do Projeto */
     --cor-azul: #3d357e;
     --cor-amarela: #edae0f;
-
-    /* Novas Cores para o Tema Escuro */
-    --cor-fundo-escuro: #111827;      /* Um cinza bem escuro, quase preto (Tailwind Gray 900) */
-    --cor-painel-escuro: #1f2937;     /* Um cinza um pouco mais claro para painéis (Tailwind Gray 800) */
-    --cor-borda-escura: #374151;      /* Cor para bordas sutis (Tailwind Gray 700) */
-    --cor-input-fundo: #374151;       /* Fundo para os campos de input (Tailwind Gray 700) */
-    
-    --cor-texto-principal: #f9fafb;   /* Um branco suave para textos principais (Tailwind Gray 50) */
-    --cor-texto-secundario: #9ca3af;  /* Um cinza mais claro para textos de apoio (Tailwind Gray 400) */
+    --cor-fundo-escuro: #111827;
+    --cor-painel-escuro: #1f2937;
+    --cor-borda-escura: #374151;
+    --cor-input-fundo: #374151;
+    --cor-texto-principal: #f9fafb;
+    --cor-texto-secundario: #9ca3af;
 }
 
-/* Estilos de base para o corpo da página */
 body {
     font-family: 'Inter', sans-serif;
-    background-color: var(--cor-fundo-escuro); /* Define o fundo principal como escuro */
-    color: var(--cor-texto-principal);         /* Define a cor padrão do texto como clara */
+    background-color: var(--cor-fundo-escuro);
+    color: var(--cor-texto-principal);
 }
 
-/* Classes de utilidade com as cores do projeto (permanecem as mesmas) */
+/* =====================================================
+    CLASSES DE UTILIDADE E CORES DO PROJETO
+   ===================================================== */
 .bg-custom-blue { background-color: var(--cor-azul); }
 .bg-custom-yellow { background-color: var(--cor-amarela); }
 .text-custom-blue { color: var(--cor-azul); }
@@ -29,65 +26,68 @@ body {
 .border-custom-yellow { border-color: var(--cor-amarela); }
 .hover\:bg-yellow-500:hover { background-color: #d49c0d; }
 
-/*
-=====================================================
+/* =====================================================
     SOBRESCREVE ESTILOS PARA O TEMA ESCURO
-=====================================================
-*/
+   ===================================================== */
 
 /* --- Tela de Login --- */
-/* Ajusta o painel de login */
-#login-page .bg-white {
-    background-color: var(--cor-painel-escuro);
-    border: 1px solid var(--cor-borda-escura);
-}
+#login-page .bg-white { background-color: var(--cor-painel-escuro); border: 1px solid var(--cor-borda-escura); }
+#login-page .text-gray-800 { color: var(--cor-texto-principal); }
+#login-page input { background-color: var(--cor-input-fundo); color: var(--cor-texto-principal); border-color: var(--cor-borda-escura); }
+#login-page input::placeholder { color: var(--cor-texto-secundario); }
 
-/* Ajusta o texto do cabeçalho do login */
-#login-page .text-gray-800 {
-    color: var(--cor-texto-principal);
-}
+/* --- Telas do Dashboard e Detalhes --- */
+#dashboard-page, #details-page { background-color: var(--cor-fundo-escuro); }
+#dashboard-page header, #details-page header { background-color: var(--cor-painel-escuro); border-bottom: 1px solid var(--cor-borda-escura); }
+.text-gray-600 { color: var(--cor-texto-secundario); }
+.text-gray-900, .text-gray-800 { color: var(--cor-texto-principal); }
+.bg-white { background-color: var(--cor-painel-escuro); border: 1px solid var(--cor-borda-escura); }
+.text-gray-500 { color: var(--cor-texto-secundario); }
+.border-gray-200 { border-color: var(--cor-borda-escura); }
 
-/* Ajusta os campos de input */
-#login-page input {
+/* --- Estilos Específicos da Nova Interface --- */
+
+/* Filtros de Status */
+.status-filter { color: var(--cor-texto-secundario); }
+.status-filter.active { color: var(--cor-amarela); border-color: var(--cor-amarela) !important; }
+.status-filter:hover { color: var(--cor-texto-principal); border-color: var(--cor-borda-escura) !important; }
+
+/* Tabela de Vistorias */
+#vistoria-list tr { border-bottom: 1px solid var(--cor-borda-escura); }
+#vistoria-list tr:last-child { border-bottom: none; }
+thead { color: var(--cor-texto-secundario); }
+
+/* Badges de Status (Cores) */
+.status-badge { color: white; }
+.status-Pendente { background-color: #d97706; } /* Ambar 600 */
+.status-Contestacao { background-color: #dc2626; } /* Vermelho 600 */
+.status-Concluida { background-color: #16a34a; } /* Verde 600 */
+.status-Agendada { background-color: #2563eb; } /* Azul 600 */
+
+/* Botões de Ação na Tela de Detalhes */
+.action-button { 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 16px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    transition: filter 0.2s;
+    text-align: center;
+}
+.action-button:hover { filter: brightness(1.1); }
+.action-button:disabled { background-color: #4b5563; cursor: not-allowed; }
+
+/* Modal de Nova Vistoria */
+#new-vistoria-modal .bg-white { background-color: var(--cor-painel-escuro); }
+.modal-input {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 8px;
     background-color: var(--cor-input-fundo);
-    color: var(--cor-texto-principal);
-    border-color: var(--cor-borda-escura);
-}
-#login-page input::placeholder { /* Cor do texto de placeholder */
-    color: var(--cor-texto-secundario);
-}
-
-
-/* --- Tela do Dashboard --- */
-/* Fundo da página do dashboard */
-#dashboard-page {
-    background-color: var(--cor-fundo-escuro);
-}
-
-/* Ajusta o cabeçalho */
-#dashboard-page header {
-    background-color: var(--cor-painel-escuro);
-    border-bottom: 1px solid var(--cor-borda-escura);
-}
-
-/* Ajusta o email do usuário no cabeçalho */
-#dashboard-page .text-gray-600 {
-    color: var(--cor-texto-secundario);
-}
-
-/* Ajusta os títulos principais no dashboard */
-#dashboard-page .text-gray-900,
-#dashboard-page .text-gray-800 {
-    color: var(--cor-texto-principal);
-}
-
-/* Ajusta o painel principal de vistorias */
-#dashboard-page main .bg-white {
-    background-color: var(--cor-painel-escuro);
     border: 1px solid var(--cor-borda-escura);
+    color: var(--cor-texto-principal);
 }
-
-/* Ajusta o texto de placeholder "Nenhuma vistoria encontrada" */
-#dashboard-page .text-gray-500 {
-    color: var(--cor-texto-secundario);
-}
+.modal-input:focus { outline: none; ring: 2px; ring-color: var(--cor-amarela); border-color: var(--cor-amarela); }
+#new-vistoria-modal .bg-gray-50 { background-color: var(--cor-fundo-escuro); border-top: 1px solid var(--cor-borda-escura); }
