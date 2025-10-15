@@ -1,14 +1,93 @@
-/* Definindo a fonte padrão e as cores do projeto */
-body {
-    font-family: 'Inter', sans-serif;
+/* :root contém as variáveis de cores para fácil customização */
+:root {
+    /* Cores Originais do Projeto */
     --cor-azul: #3d357e;
     --cor-amarela: #edae0f;
+
+    /* Novas Cores para o Tema Escuro */
+    --cor-fundo-escuro: #111827;      /* Um cinza bem escuro, quase preto (Tailwind Gray 900) */
+    --cor-painel-escuro: #1f2937;     /* Um cinza um pouco mais claro para painéis (Tailwind Gray 800) */
+    --cor-borda-escura: #374151;      /* Cor para bordas sutis (Tailwind Gray 700) */
+    --cor-input-fundo: #374151;       /* Fundo para os campos de input (Tailwind Gray 700) */
+    
+    --cor-texto-principal: #f9fafb;   /* Um branco suave para textos principais (Tailwind Gray 50) */
+    --cor-texto-secundario: #9ca3af;  /* Um cinza mais claro para textos de apoio (Tailwind Gray 400) */
 }
 
-/* Classes customizadas para usar as cores do projeto com Tailwind */
+/* Estilos de base para o corpo da página */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--cor-fundo-escuro); /* Define o fundo principal como escuro */
+    color: var(--cor-texto-principal);         /* Define a cor padrão do texto como clara */
+}
+
+/* Classes de utilidade com as cores do projeto (permanecem as mesmas) */
 .bg-custom-blue { background-color: var(--cor-azul); }
 .bg-custom-yellow { background-color: var(--cor-amarela); }
 .text-custom-blue { color: var(--cor-azul); }
 .text-custom-yellow { color: var(--cor-amarela); }
 .border-custom-yellow { border-color: var(--cor-amarela); }
-.hover\:bg-yellow-500:hover { background-color: #d49c0d; } /* Um tom mais escuro para o hover */
+.hover\:bg-yellow-500:hover { background-color: #d49c0d; }
+
+/*
+=====================================================
+    SOBRESCREVE ESTILOS PARA O TEMA ESCURO
+=====================================================
+*/
+
+/* --- Tela de Login --- */
+/* Ajusta o painel de login */
+#login-page .bg-white {
+    background-color: var(--cor-painel-escuro);
+    border: 1px solid var(--cor-borda-escura);
+}
+
+/* Ajusta o texto do cabeçalho do login */
+#login-page .text-gray-800 {
+    color: var(--cor-texto-principal);
+}
+
+/* Ajusta os campos de input */
+#login-page input {
+    background-color: var(--cor-input-fundo);
+    color: var(--cor-texto-principal);
+    border-color: var(--cor-borda-escura);
+}
+#login-page input::placeholder { /* Cor do texto de placeholder */
+    color: var(--cor-texto-secundario);
+}
+
+
+/* --- Tela do Dashboard --- */
+/* Fundo da página do dashboard */
+#dashboard-page {
+    background-color: var(--cor-fundo-escuro);
+}
+
+/* Ajusta o cabeçalho */
+#dashboard-page header {
+    background-color: var(--cor-painel-escuro);
+    border-bottom: 1px solid var(--cor-borda-escura);
+}
+
+/* Ajusta o email do usuário no cabeçalho */
+#dashboard-page .text-gray-600 {
+    color: var(--cor-texto-secundario);
+}
+
+/* Ajusta os títulos principais no dashboard */
+#dashboard-page .text-gray-900,
+#dashboard-page .text-gray-800 {
+    color: var(--cor-texto-principal);
+}
+
+/* Ajusta o painel principal de vistorias */
+#dashboard-page main .bg-white {
+    background-color: var(--cor-painel-escuro);
+    border: 1px solid var(--cor-borda-escura);
+}
+
+/* Ajusta o texto de placeholder "Nenhuma vistoria encontrada" */
+#dashboard-page .text-gray-500 {
+    color: var(--cor-texto-secundario);
+}
