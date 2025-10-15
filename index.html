@@ -48,9 +48,6 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
                     <h1 class="text-3xl font-bold text-gray-900">Painel de Vistorias</h1>
-                    <button id="new-vistoria-btn" class="px-6 py-3 text-white font-semibold bg-custom-yellow rounded-lg shadow-md hover:bg-yellow-500 transition duration-300 w-full sm:w-auto">
-                        + Agendar Nova Vistoria
-                    </button>
                 </div>
 
                 <div class="mb-6">
@@ -130,32 +127,6 @@
                 </div>
             </div>
         </main>
-    </div>
-
-    <div id="new-vistoria-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg">
-            <form id="new-vistoria-form">
-                <div class="p-8">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-6">Agendar Nova Vistoria</h3>
-                    <div class="space-y-4">
-                        <input name="codigoImovel" required class="modal-input" placeholder="Código do Imóvel (ex: SC-123)">
-                        <input name="endereco" required class="modal-input" placeholder="Endereço Completo do Imóvel">
-                        <select name="tipo" required class="modal-input">
-                            <option value="" disabled selected>Selecione o Tipo de Vistoria</option>
-                            <option value="Entrada">Vistoria de Entrada</option>
-                            <option value="Saída">Vistoria de Saída</option>
-                        </select>
-                        <input name="locatario" required class="modal-input" placeholder="Nome do Locatário">
-                        <input name="dataAgendamento" type="date" required class="modal-input">
-                        <input name="linkRelatorio" class="modal-input" placeholder="Link para o relatório (opcional)">
-                    </div>
-                </div>
-                <div class="bg-gray-50 p-4 flex justify-end gap-4 rounded-b-2xl">
-                    <button type="button" id="cancel-modal-btn" class="px-6 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300">Cancelar</button>
-                    <button type="submit" class="px-6 py-2 text-sm font-medium text-white bg-custom-blue rounded-lg hover:bg-opacity-90">Salvar Agendamento</button>
-                </div>
-            </form>
-        </div>
     </div>
     
     <script type="module" src="firebase-config.js"></script>
