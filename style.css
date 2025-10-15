@@ -7,7 +7,7 @@
     --cor-borda-escura: #374151;
     --cor-input-fundo: #374151;
     --cor-texto-principal: #f9fafb;   /* Cor branca principal */
-    --cor-texto-secundario: #9ca3af;  /* Cor cinza secundária */
+    --cor-texto-secundario: #9ca3af;  /* Cor cinza claro para textos de apoio */
 }
 
 body {
@@ -61,14 +61,17 @@ a.text-custom-blue:hover, #back-to-dashboard:hover { filter: brightness(1.15); }
 /* Tabela de Vistorias */
 #vistoria-list tr { border-bottom: 1px solid var(--cor-borda-escura); }
 #vistoria-list tr:last-child { border-bottom: none; }
-#vistoria-list, #vistoria-list td, #vistoria-list th {
-    color: var(--cor-texto-principal); /* Garante que todo texto dentro da tabela seja branco */
-}
+
+/* *** CORREÇÃO DE LEGIBILIDADE APLICADA AQUI *** */
 thead {
-    /* CORREÇÃO APLICADA AQUI */
-    color: var(--cor-texto-principal); /* A cor do cabeçalho agora é branca */
-    opacity: 0.8; /* Adiciona uma leve opacidade para diferenciar do conteúdo */
+    /* Define o texto do cabeçalho como o cinza claro, que é legível e sutil */
+    color: var(--cor-texto-secundario);
 }
+#vistoria-list td {
+    /* Força o texto do corpo da tabela a ser branco puro para máximo contraste */
+    color: var(--cor-texto-principal);
+}
+
 
 /* Badges de Status (Cores) */
 .status-badge { color: white; }
