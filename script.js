@@ -1,51 +1,83 @@
-// --- LÓGICA DE NAVEGAÇÃO SIMULADA ---
+// Importa o serviço de autenticação do seu arquivo de configuração
+import { auth } from './firebase-config.js';
 
-// Espera o DOM carregar completamente para garantir que todos os elementos existam
-document.addEventListener('DOMContentLoaded', () => {
-    // Selecionando os elementos da página
-    const loginPage = document.getElementById('login-page');
-    const dashboardPage = document.getElementById('dashboard-page');
-    const loginForm = document.getElementById('login-form');
-    const logoutButton = document.getElementById('logout-button');
-    const userEmailDisplay = document.getElementById('user-email-display');
-    const emailInput = document.getElementById('email');
+// Importa as funções de autenticação que vamos usar
+import { 
+    signInWithEmailAndPassword, 
+    signOut, 
+    onAuthStateChanged 
+} from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
 
-    // Função para mostrar o dashboard e esconder o login
-    function showDashboard(email) {
-        if (userEmailDisplay) {
-            userEmailDisplay.textContent = email; // Mostra o e-mail do usuário no header
-        }
-        loginPage.classList.add('hidden');
-        dashboardPage.classList.remove('hidden');
+
+// --- LÓGICA REAL COM FIREBASE ---
+
+// Seleciona os elementos da página
+const loginPage = document.getElementById('login-page');
+const dashboardPage = document.getElementById('dashboard-page');
+const loginForm = document.getElementById('login-form');
+const logoutButton = document.getElementById('logout-button');
+const userEmailDisplay = document.getElementById('user-email-display');
+
+// --- Funções de UI ---
+
+// Função para mostrar o dashboard e esconder o login
+function showDashboard(email) {
+    userEmailDisplay.textContent = email;
+    loginPage.classList.add('hidden');
+    dashboardPage.classList.remove('hidden');
+}
+
+// Função para mostrar o login e esconder o dashboard
+function showLoginPage() {
+    loginPage.classList.remove('hidden');
+    dashboardPage.classList.add('hidden');
+    loginForm.reset();
+}
+
+// --- Lógica de Autenticação ---
+
+// 1. Observador de estado de autenticação (a forma moderna de gerenciar login)
+// Esta função é chamada automaticamente quando o usuário faz login ou logout.
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        // Usuário está logado.
+        console.log("Usuário logado:", user.email);
+        showDashboard(user.email);
+    } else {
+        // Usuário está deslogado.
+        console.log("Nenhum usuário logado.");
+        showLoginPage();
     }
+});
 
-    // Função para mostrar o login e esconder o dashboard
-    function showLoginPage() {
-        loginPage.classList.remove('hidden');
-        dashboardPage.classList.add('hidden');
-        if (loginForm) {
-            loginForm.reset(); // Limpa o formulário de login
-        }
-    }
+// 2. Evento de submit do formulário de login
+loginForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    
+    const email = loginForm.email.value;
+    const password = loginForm.password.value;
 
-    // Evento de submit do formulário de login
-    if (loginForm) {
-        loginForm.addEventListener('submit', (event) => {
-            event.preventDefault(); // Impede o recarregamento da página
-            const userEmail = emailInput.value;
-            // Por enquanto, qualquer login é válido.
-            // No futuro, aqui entrará a chamada para o Firebase Auth.
-            console.log(`Tentativa de login com: ${userEmail}`);
-            showDashboard(userEmail);
+    signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Sucesso no login. O onAuthStateChanged vai cuidar de mostrar o dashboard.
+            console.log("Login bem-sucedido!", userCredential.user);
+        })
+        .catch((error) => {
+            // Erro no login.
+            console.error("Erro no login:", error.code, error.message);
+            alert("E-mail ou senha incorretos. Por favor, tente novamente.");
         });
-    }
+});
 
-    // Evento de clique no botão de logout
-    if (logoutButton) {
-        logoutButton.addEventListener('click', () => {
-            // No futuro, aqui entrará a chamada de signOut do Firebase.
-            console.log('Usuário deslogado.');
-            showLoginPage();
+// 3. Evento de clique no botão de logout
+logoutButton.addEventListener('click', () => {
+    signOut(auth)
+        .then(() => {
+            // Sucesso no logout. O onAuthStateChanged vai cuidar de mostrar a tela de login.
+            console.log("Logout bem-sucedido!");
+        })
+        .catch((error) => {
+            console.error("Erro no logout:", error);
+            alert("Ocorreu um erro ao tentar sair.");
         });
-    }
 });
