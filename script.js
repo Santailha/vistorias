@@ -12,7 +12,9 @@ import {
 import { 
     collection, 
     getDocs, 
-    addDoc 
+    addDoc,
+    doc,
+    setDoc
 } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
 
@@ -85,7 +87,7 @@ async function fetchVistorias() {
         vistorias = vistoriaSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     } catch (error) {
         console.error("Erro ao buscar vistorias: ", error);
-        alert("Não foi possível carregar os dados das vistorias.");
+        alert("Não foi possível carregar os dados das vistorias. Verifique as regras de segurança do Firestore.");
     }
 }
 
@@ -114,23 +116,27 @@ function renderVistorias() {
     });
 
     if (filteredVistorias.length === 0) {
-        vistoriaList.innerHTML = `<tr><td colspan="6" class="text-center py-10 text-gray-500">Nenhuma vistoria encontrada para este status.</td></tr>`;
+        vistoriaList.innerHTML = `<tr><td colspan="7" class="text-center py-10 text-gray-500">Nenhuma vistoria encontrada para este status.</td></tr>`;
         return;
     }
 
     filteredVistorias.forEach(vistoria => {
         const translatedStatus = statusTranslate[vistoria.status] || vistoria.status;
         const statusClass = statusClassMap[vistoria.status] || 'bg-gray-500';
-        const dataFormatada = vistoria.dataAgendamento 
-            ? new Date(vistoria.dataAgendamento + 'T00:00:00').toLocaleDateString('pt-BR') 
-            : 'Aguardando';
+        const dataFormatada = vistoria.dataAgendamento ? new Date(vistoria.dataAgendamento + 'T00:00:00').toLocaleDateString('pt-BR') : 'Aguardando';
+        const precoFormatado = vistoria.preco ? `R$ ${parseFloat(vistoria.preco).toFixed(2).replace('.', ',')}` : '-';
+        
+        const codigoHtml = vistoria.linkPagina 
+            ? `<a href="https://${vistoria.linkPagina}" target="_blank" class="text-custom-yellow hover:underline">${vistoria.codigoImovel || vistoria.id}</a>`
+            : `${vistoria.codigoImovel || vistoria.id}`;
 
         const row = `
             <tr class="hover:bg-gray-700/50">
-                <td class="py-4 px-6 font-medium">${vistoria.codigoImovel || vistoria.id}</td>
+                <td class="py-4 px-6 font-medium">${codigoHtml}</td>
                 <td class="py-4 px-6 hidden md:table-cell">${vistoria.endereco || 'Não informado'}</td>
                 <td class="py-4 px-6">${vistoria.tipo}</td>
                 <td class="py-4 px-6 hidden sm:table-cell">${dataFormatada}</td>
+                <td class="py-4 px-6 font-medium">${precoFormatado}</td>
                 <td class="py-4 px-6">
                     <span class="text-xs font-semibold py-1 px-3 rounded-full status-badge ${statusClass}">${translatedStatus}</span>
                 </td>
@@ -153,11 +159,12 @@ function populateDetailsPage() {
     document.getElementById('details-codigo').textContent = vistoria.codigoImovel || vistoria.id;
     document.getElementById('details-endereco').textContent = vistoria.endereco || 'Não informado';
     document.getElementById('details-tipo').textContent = vistoria.tipo;
-    document.getElementById('details-data').textContent = vistoria.dataAgendamento 
-        ? new Date(vistoria.dataAgendamento + 'T00:00:00').toLocaleDateString('pt-BR') 
-        : 'Aguardando';
+    document.getElementById('details-data').textContent = vistoria.dataAgendamento ? new Date(vistoria.dataAgendamento + 'T00:00:00').toLocaleDateString('pt-BR') : 'Aguardando';
     document.getElementById('details-locatario').textContent = vistoria.locatario || 'Não informado';
     
+    document.getElementById('details-preco').textContent = vistoria.preco ? `R$ ${parseFloat(vistoria.preco).toFixed(2).replace('.', ',')}` : '-';
+    document.getElementById('details-franquia').textContent = vistoria.franquia || 'Não informada';
+
     const translatedStatus = statusTranslate[vistoria.status] || vistoria.status;
     const statusBadge = document.getElementById('details-status-badge');
     statusBadge.textContent = translatedStatus;
@@ -174,13 +181,12 @@ function populateDetailsPage() {
 
     const historyList = document.getElementById('details-history');
     historyList.innerHTML = '';
-    
     if (vistoria.history && Array.isArray(vistoria.history)) {
         vistoria.history.forEach(item => {
-            historyList.innerHTML += `<li><strong>${new Date(item.date).toLocaleDateString('pt-BR')}:</strong> ${item.event}</li>`;
+            const dataEvento = item.date ? new Date(item.date).toLocaleDateString('pt-BR') : 'Data';
+            historyList.innerHTML += `<li><strong>${dataEvento}:</strong> ${item.event}</li>`;
         });
     }
-
     if (vistoria.observacao) {
         historyList.innerHTML += `<li class="text-yellow-400"><strong>Observação da API:</strong> ${vistoria.observacao}</li>`;
     }
@@ -248,8 +254,9 @@ statusFilters.forEach(filter => {
 
 // Evento de clique para ver detalhes (usando delegação de evento)
 vistoriaList.addEventListener('click', e => {
-    if (e.target.classList.contains('view-details-btn')) {
-        currentVistoriaId = e.target.dataset.id;
+    const target = e.target.closest('.view-details-btn');
+    if (target) {
+        currentVistoriaId = target.dataset.id;
         showDetailsPage();
     }
 });
@@ -264,8 +271,10 @@ closeModalBtn.addEventListener('click', () => newVistoriaModal.classList.add('hi
 newVistoriaForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const formData = new FormData(newVistoriaForm);
+    const codigoImovel = formData.get('codigoImovel');
+
     const vistoriaData = {
-        codigoImovel: formData.get('codigoImovel'),
+        codigoImovel: codigoImovel,
         endereco: formData.get('endereco'),
         locatario: formData.get('locatario'),
         dataAgendamento: formData.get('dataAgendamento'),
@@ -278,10 +287,14 @@ newVistoriaForm.addEventListener('submit', async (e) => {
     };
 
     try {
-        await addDoc(collection(db, "vistorias"), vistoriaData);
+        // Usa o código da vistoria como ID do documento
+        const docRef = doc(db, "vistorias", codigoImovel);
+        await setDoc(docRef, vistoriaData);
+
         newVistoriaForm.reset();
         newVistoriaModal.classList.add('hidden');
         fetchAndRenderVistorias(); // Atualiza a lista na tela
+        alert('Vistoria salva com sucesso!');
     } catch (error) {
         console.error("Erro ao adicionar vistoria: ", error);
         alert("Erro ao salvar a vistoria.");
