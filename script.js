@@ -2,16 +2,16 @@
 import { auth, db } from './firebase-config.js';
 
 // Importa as funções de autenticação
-import { 
-    signInWithEmailAndPassword, 
-    signOut, 
-    onAuthStateChanged 
+import {
+    signInWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
 
 // Importa as funções do Firestore
-import { 
-    collection, 
-    getDocs, 
+import {
+    collection,
+    getDocs,
     doc,
     setDoc
 } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
@@ -20,7 +20,7 @@ import {
 // =================================================================
 //  ESTADO DA APLICAÇÃO
 // =================================================================
-let vistorias = []; 
+let vistorias = [];
 let currentVistoriaId = null;
 let currentStatusFilter = 'Todos';
 
@@ -96,9 +96,10 @@ async function fetchAndRenderVistorias() {
 // =================================================================
 function renderVistorias() {
     vistoriaList.innerHTML = '';
-    
-    const filteredVistorias = vistorias.filter(v => {
-        const translatedStatus = statusTranslate[v.status] || v.status;
+
+    // CORREÇÃO APLICADA AQUI: a variável é 'vistoria', não 'v'.
+    const filteredVistorias = vistorias.filter(vistoria => {
+        const translatedStatus = statusTranslate[vistoria.status] || vistoria.status;
         return currentStatusFilter === 'Todos' || translatedStatus === currentStatusFilter;
     });
 
@@ -108,12 +109,12 @@ function renderVistorias() {
     }
 
     filteredVistorias.forEach(vistoria => {
-        const translatedStatus = statusTranslate[v.status] || v.status;
+        const translatedStatus = statusTranslate[vistoria.status] || vistoria.status;
         const statusClass = statusClassMap[vistoria.status] || 'bg-gray-500';
         const dataFormatada = vistoria.dataAgendamento ? new Date(vistoria.dataAgendamento + 'T00:00:00').toLocaleDateString('pt-BR') : 'Aguardando';
         const precoFormatado = vistoria.preco ? `R$ ${parseFloat(vistoria.preco).toFixed(2).replace('.', ',')}` : '-';
-        
-        const codigoHtml = vistoria.linkPagina 
+
+        const codigoHtml = vistoria.linkPagina
             ? `<a href="https://${vistoria.linkPagina}" target="_blank" class="text-custom-yellow hover:underline">${vistoria.codigoImovel}</a>`
             : `${vistoria.codigoImovel}`;
 
