@@ -97,7 +97,6 @@ async function fetchAndRenderVistorias() {
 function renderVistorias() {
     vistoriaList.innerHTML = '';
 
-    // CORREÇÃO APLICADA AQUI: a variável é 'vistoria', não 'v'.
     const filteredVistorias = vistorias.filter(vistoria => {
         const translatedStatus = statusTranslate[vistoria.status] || vistoria.status;
         return currentStatusFilter === 'Todos' || translatedStatus === currentStatusFilter;
@@ -118,6 +117,12 @@ function renderVistorias() {
             ? `<a href="https://${vistoria.linkPagina}" target="_blank" class="text-custom-yellow hover:underline">${vistoria.codigoImovel}</a>`
             : `${vistoria.codigoImovel}`;
 
+        // *** NOVA LÓGICA PARA O BOTÃO DO LAUDO ***
+        let acoesHtml = `<button class="font-medium text-custom-yellow hover:underline view-details-btn" data-id="${vistoria.id}">Ver Detalhes</button>`;
+        if (vistoria.linkRelatorio) {
+            acoesHtml += ` | <a href="${vistoria.linkRelatorio}" target="_blank" class="font-medium text-blue-400 hover:underline">Ver Laudo</a>`;
+        }
+
         const row = `
             <tr class="hover:bg-gray-700/50">
                 <td class="py-4 px-6 font-medium">${codigoHtml}</td>
@@ -128,9 +133,7 @@ function renderVistorias() {
                 <td class="py-4 px-6">
                     <span class="text-xs font-semibold py-1 px-3 rounded-full status-badge ${statusClass}">${translatedStatus}</span>
                 </td>
-                <td class="py-4 px-6 text-center">
-                    <button class="font-medium text-custom-yellow hover:underline view-details-btn" data-id="${vistoria.id}">Ver Detalhes</button>
-                </td>
+                <td class="py-4 px-6 text-center">${acoesHtml}</td>
             </tr>
         `;
         vistoriaList.innerHTML += row;
@@ -248,7 +251,7 @@ closeModalBtn.addEventListener('click', () => newVistoriaModal.classList.add('hi
 newVistoriaForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const formData = new FormData(newVistoriaForm);
-    const codigoVistoria = formData.get('codigoVistoria'); // Este será o ID do documento
+    const codigoVistoria = formData.get('codigoVistoria');
 
     if (!codigoVistoria) {
         alert("O Código da Vistoria é obrigatório para o cadastro manual.");
@@ -271,7 +274,7 @@ newVistoriaForm.addEventListener('submit', async (e) => {
 
     try {
         const docRef = doc(db, "vistorias", codigoVistoria);
-        await setDoc(docRef, vistoriaData, { merge: true }); // Usar merge para não sobrescrever dados do webhook
+        await setDoc(docRef, vistoriaData, { merge: true });
 
         newVistoriaForm.reset();
         newVistoriaModal.classList.add('hidden');
