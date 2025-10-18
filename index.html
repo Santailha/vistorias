@@ -3,133 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Análise de Vistorias</title>
+    <title>Clean UP Shoes - Ordens de Serviço</title>
+    
+    <link rel="icon" type="image/png" href="logo.png">
     
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
-</head>
-<body class="bg-gray-100">
 
-    <div id="login-page" class="flex items-center justify-center min-h-screen bg-custom-blue">
-        <div class="w-full max-w-md p-8 space-y-8 bg-white rounded-2xl shadow-xl m-4">
-            <div class="flex justify-center">
-                <img src="logo.png" alt="Logo da Empresa" class="h-16" onerror="this.alt='Logo não encontrada'; this.style.display='none'; document.getElementById('logo-text').style.display='block';">
-                <h1 id="logo-text" class="text-3xl font-bold text-custom-blue" style="display: none;">Análise de Vistoria</h1>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body class="bg-gray-800 text-gray-200">
+
+    <div id="login-section" class="flex items-center justify-center min-h-screen p-4">
+        <div class="w-full max-w-sm p-8 space-y-6 bg-gray-900 rounded-2xl shadow-2xl border border-emerald-500/20">
+            <div class="text-center">
+                <img src="logo.png" alt="Clean UP Shoes Logo" class="w-48 mx-auto">
+                <p class="text-gray-400 tracking-widest text-sm">SHOES DETAILS</p>
+                <p class="mt-6 text-gray-300">Acesse seu painel de controle</p>
             </div>
-            <h2 class="text-2xl font-bold text-center text-gray-800">Acesse sua conta</h2>
-            <form id="login-form" class="mt-8 space-y-6">
-                <div class="space-y-4">
-                    <input id="email" name="email" type="email" autocomplete="email" required class="w-full px-4 py-3 text-gray-700 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-yellow focus:border-transparent" placeholder="Seu e-mail">
-                    <input id="password" name="password" type="password" autocomplete="current-password" required class="w-full px-4 py-3 text-gray-700 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-yellow focus:border-transparent" placeholder="Sua senha">
+            <form id="login-form" class="space-y-6">
+                <div>
+                    <label for="email" class="text-sm font-medium text-gray-400">Email</label>
+                    <input id="email" name="email" type="email" autocomplete="email" required value=""
+                           class="w-full px-4 py-2 mt-1 text-gray-200 bg-gray-800 border border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
                 </div>
-                <div class="flex items-center justify-between"><a href="#" class="text-sm font-medium text-custom-blue hover:text-custom-yellow">Esqueceu sua senha?</a></div>
-                <div><button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent text-lg font-semibold rounded-lg text-white bg-custom-blue hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue transition duration-300 ease-in-out">Entrar</button></div>
+                <div>
+                    <label for="password" class="text-sm font-medium text-gray-400">Senha</label>
+                    <input id="password" name="password" type="password" autocomplete="current-password" required value=""
+                           class="w-full px-4 py-2 mt-1 text-gray-200 bg-gray-800 border border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                </div>
+                <div>
+                    <button type="submit"
+                            class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-md text-sm font-bold text-gray-900 btn-gradient hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-opacity duration-300">
+                        Entrar
+                    </button>
+                </div>
             </form>
         </div>
     </div>
 
-    <div id="dashboard-page" class="hidden min-h-screen">
-        <header class="bg-white shadow-md">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex items-center justify-between h-20">
-                    <div class="flex-shrink-0"><img class="h-12" src="logo.png" alt="Logo da Empresa" onerror="this.style.display='none'"></div>
-                    <div class="flex items-center">
-                        <span class="mr-4 font-medium text-gray-600 hidden sm:block user-email-display"></span>
-                        <button class="px-4 py-2 text-sm font-medium text-white bg-custom-blue rounded-lg hover:bg-opacity-90 logout-button">Sair</button>
-                    </div>
+    <div id="dashboard-section" class="hidden">
+        <header class="bg-gray-900 shadow-lg sticky top-0 z-40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center relative">
+                <div class="flex items-center gap-3">
+                    <img src="logo.png" alt="Clean UP Shoes Logo" class="h-10">
+                    <span class="text-gray-500 text-2xl font-light">|</span>
+                    <h2 class="text-xl font-semibold text-gray-300 pt-1">Ordens de Serviço</h2>
                 </div>
+        
+                <div class="lg:hidden">
+                    <button id="menu-toggle" class="text-gray-300 hover:text-white focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+        
+                <nav id="menu-links" class="hidden absolute top-full left-0 w-full bg-gray-900 shadow-lg p-4 space-y-2 lg:space-y-0 lg:p-0 lg:static lg:w-auto lg:bg-transparent lg:shadow-none lg:flex lg:items-center lg:gap-4">
+                    <a href="servicos.html" id="services-link" class="block lg:inline-block w-full text-center lg:w-auto bg-gray-700 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-600 font-semibold shadow-md">
+                        Serviços
+                    </a>
+                    <a href="dashboard.html" id="dashboard-link" class="block lg:inline-block w-full text-center lg:w-auto bg-gray-700 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-600 font-semibold shadow-md">
+                        Dashboard
+                    </a>
+                    <a href="clientes.html" class="block lg:inline-block w-full text-center lg:w-auto bg-gray-700 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-600 font-semibold shadow-md">
+                        Clientes
+                    </a>
+                    <button id="add-order-btn" class="w-full lg:w-auto flex items-center justify-center gap-2 btn-gradient text-gray-900 px-4 py-2 rounded-lg hover:opacity-90 font-semibold shadow-md">
+                        + Nova Ordem
+                    </button>
+                    <button id="logout-btn" class="w-full lg:w-auto flex justify-center text-gray-500 hover:text-red-500 py-2 lg:py-0 lg:px-2" title="Sair">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6"><path fill-rule="evenodd" d="M3 4.25A2.25 2.25 0 015.25 2h5.5A2.25 2.25 0 0113 4.25v2a.75.75 0 01-1.5 0v-2a.75.75 0 00-.75-.75h-5.5a.75.75 0 00-.75.75v11.5c0 .414.336.75.75.75h5.5a.75.75 0 00.75-.75v-2a.75.75 0 011.5 0v2A2.25 2.25 0 0110.75 18h-5.5A2.25 2.25 0 013 15.75V4.25z" clip-rule="evenodd" /><path fill-rule="evenodd" d="M16.78 9.22a.75.75 0 011.06 0l3 3a.75.75 0 010 1.06l-3 3a.75.75 0 11-1.06-1.06L18.44 12l-1.68-1.68a.75.75 0 010-1.06z" clip-rule="evenodd" /></svg>
+                    </button>
+                </nav>
             </div>
         </header>
 
-        <main class="py-10">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
-                    <h1 class="text-3xl font-bold text-gray-900">Painel de Vistorias</h1>
-                </div>
-
-                <div class="mb-6">
-                    <div class="flex flex-wrap gap-2 border-b border-gray-200">
-                        <button class="status-filter py-2 px-4 text-sm font-medium text-center rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 active" data-status="Todos">Todos</button>
-                        <button class="status-filter py-2 px-4 text-sm font-medium text-center rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300" data-status="Pendente de Análise">Pendente de Análise</button>
-                        <button class="status-filter py-2 px-4 text-sm font-medium text-center rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300" data-status="Em Contestação">Em Contestação</button>
-                        <button class="status-filter py-2 px-4 text-sm font-medium text-center rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300" data-status="Concluída">Concluídas</button>
-                    </div>
-                </div>
-                
-                <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg overflow-x-auto">
-                    <table class="w-full text-sm text-left">
-                        <thead class="text-xs uppercase">
-                            <tr>
-                                <th scope="col" class="py-3 px-6">Cód. Imóvel</th>
-                                <th scope="col" class="py-3 px-6 hidden md:table-cell">Endereço</th>
-                                <th scope="col" class="py-3 px-6">Tipo</th>
-                                <th scope="col" class="py-3 px-6 hidden sm:table-cell">Agendamento</th>
-                                <th scope="col" class="py-3 px-6">Status</th>
-                                <th scope="col" class="py-3 px-6 text-center">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody id="vistoria-list">
-                            </tbody>
-                    </table>
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="mb-8">
+                <div class="relative">
+                    <input type="text" id="search-input" placeholder="Buscar por cliente, tênis ou tag..." class="w-full px-4 py-3 text-lg text-gray-200 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    <svg class="w-6 h-6 text-gray-400 absolute top-1/2 right-4 -translate-y-1/2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" /></svg>
                 </div>
             </div>
-        </main>
-    </div>
 
-    <div id="details-page" class="hidden min-h-screen">
-         <header class="bg-white shadow-md">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex items-center justify-between h-20"><div class="flex-shrink-0"><img class="h-12" src="logo.png" alt="Logo da Empresa" onerror="this.style.display='none'"></div><div class="flex items-center"><span class="mr-4 font-medium text-gray-600 hidden sm:block user-email-display"></span><button class="px-4 py-2 text-sm font-medium text-white bg-custom-blue rounded-lg hover:bg-opacity-90 logout-button">Sair</button></div></div></div>
-        </header>
-
-        <main class="py-10">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <button id="back-to-dashboard" class="mb-6 text-sm font-medium text-custom-blue hover:underline">← Voltar para o Painel</button>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div class="lg:col-span-2 space-y-8">
-                        <div class="bg-white p-8 rounded-2xl shadow-lg">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <h2 class="text-2xl font-bold text-gray-900" id="details-codigo"></h2>
-                                    <p class="text-gray-500 mt-1" id="details-endereco"></p>
-                                </div>
-                                <span class="text-xs font-semibold py-1 px-3 rounded-full" id="details-status-badge"></span>
-                            </div>
-                            <div class="border-t border-gray-200 my-6"></div>
-                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-6 text-sm">
-                                <div><p class="text-gray-500">Tipo de Vistoria</p><p class="font-semibold text-gray-800" id="details-tipo"></p></div>
-                                <div><p class="text-gray-500">Data Agendada</p><p class="font-semibold text-gray-800" id="details-data"></p></div>
-                                <div><p class="text-gray-500">Locatário</p><p class="font-semibold text-gray-800" id="details-locatario"></p></div>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-8 rounded-2xl shadow-lg">
-                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Painel de Ações</h3>
-                            <p class="text-sm text-gray-500 mb-6">Selecione a próxima etapa para esta vistoria.</p>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <a id="action-download-report" href="#" target="_blank" class="action-button bg-gray-600">Baixar Relatório PDF</a>
-                                <button id="action-request-correction" class="action-button bg-orange-500">Solicitar Correção</button>
-                                <button id="action-send-maintenance" class="action-button bg-red-600">Encaminhar para Manutenção</button>
-                                <button id="action-upload-bitrix" class="action-button bg-blue-600">Anexar Laudo no Bitrix</button>
-                                <button id="action-approve" class="action-button bg-green-600 col-span-1 sm:col-span-2">Aprovar e Finalizar Vistoria</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white p-8 rounded-2xl shadow-lg">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-6">Histórico de Eventos</h3>
-                        <ul id="details-history" class="space-y-4 text-sm text-gray-600 border-l-2 border-gray-200 pl-4">
-                           </ul>
-                    </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div>
+                    <h2 class="text-xl font-semibold mb-4 flex items-center gap-2 text-gray-300">Em Aberto</h2>
+                    <div id="open-orders-list" class="space-y-4"></div>
+                </div>
+                <div>
+                    <h2 class="text-xl font-semibold mb-4 flex items-center gap-2 text-gray-300">Finalizadas</h2>
+                    <div id="finished-orders-list" class="space-y-4"></div>
                 </div>
             </div>
         </main>
     </div>
     
-    <script type="module" src="firebase-config.js"></script>
-    <script type="module" src="script.js"></script>
+    <div id="new-order-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-80 flex items-center justify-center z-50 p-4">
+        <div class="bg-gray-800 border border-emerald-500/20 rounded-2xl shadow-2xl w-full max-w-2xl transform transition-all scale-95 opacity-0 flex flex-col max-h-[95vh]" id="modal-content">
+            
+            <div class="flex justify-between items-center p-8 pb-6 flex-shrink-0">
+                <h3 id="modal-title" class="text-2xl font-bold text-gray-200">Nova Ordem de Serviço</h3>
+                <button id="close-modal-btn" class="text-gray-500 hover:text-gray-300 text-3xl">&times;</button>
+            </div>
+            
+            <form id="new-order-form" class="flex flex-col flex-grow min-h-0">
+                
+                <div class="overflow-y-auto px-8 space-y-6 flex-grow">
+                    <input type="hidden" id="editing-order-id">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="customer-search-input" class="block text-sm font-medium text-gray-400">Cliente</label>
+                            <div class="flex items-center gap-2 mt-1">
+                                <div class="flex-grow relative">
+                                    <input type="text" id="customer-search-input" placeholder="Digite para buscar..." autocomplete="off" required class="w-full px-4 py-2 text-gray-200 bg-gray-700 border border-gray-600 rounded-lg">
+                                    <input type="hidden" id="selected-customer-id">
+                                    <div id="customer-search-results" class="hidden absolute w-full mt-1 bg-gray-900 border border-gray-600 rounded-lg shadow-lg z-10 max-h-48 overflow-y-auto"></div>
+                                </div>
+                                <a href="clientes.html" title="Cadastrar Novo Cliente" class="flex-shrink-0 bg-gray-600 text-gray-200 h-10 w-10 flex items-center justify-center rounded-lg hover:bg-gray-500 font-semibold transition-colors text-xl">+</a>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="client-phone" class="block text-sm font-medium text-gray-400">Telefone</label>
+                            <input type="tel" id="client-phone" readonly class="w-full px-4 py-2 mt-1 text-gray-400 bg-gray-900/50 border border-gray-600 rounded-lg">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="identification-tag" class="block text-sm font-medium text-gray-400">Tag de identificação</label>
+                        <input type="number" id="identification-tag" class="w-full px-4 py-2 mt-1 text-gray-200 bg-gray-700 border border-gray-600 rounded-lg">
+                    </div>
+                    <div id="service-items-container" class="space-y-4 pt-4 border-t border-gray-700 pr-2"></div>
+                    <div class="flex justify-between items-center pt-4 border-t border-gray-700">
+                        <button type="button" id="add-service-btn" class="flex items-center gap-2 bg-gray-600 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-500 font-semibold">
+                            + Adicionar Serviço
+                        </button>
+                        <div class="text-right">
+                            <p class="text-sm font-medium text-gray-400">VALOR TOTAL</p>
+                            <p id="total-value-display" class="text-3xl font-bold text-emerald-400">R$ 0,00</p>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="observations" class="block text-sm font-medium text-gray-400">Observações Gerais</label>
+                        <textarea id="observations" rows="2" class="w-full px-4 py-2 mt-1 text-gray-200 bg-gray-700 border border-gray-600 rounded-lg"></textarea>
+                    </div>
+                     <div class="flex items-center pt-4 border-t border-gray-700 pb-4">
+                        <input id="payment-status-checkbox" type="checkbox" class="h-4 w-4 rounded border-gray-600 text-emerald-500 focus:ring-emerald-600 bg-gray-700">
+                        <label for="payment-status-checkbox" class="ml-2 block text-sm font-medium text-gray-300">Marcar como Pago</label>
+                    </div>
+                </div>
+                
+                <div class="flex justify-end p-8 pt-6 gap-4 flex-shrink-0 border-t border-gray-700">
+                    <button type="button" id="cancel-modal-btn" class="bg-gray-600 text-gray-200 px-6 py-2 rounded-lg hover:bg-gray-500 font-semibold">Cancelar</button>
+                    <button type="submit" id="save-order-btn" class="btn-gradient text-gray-900 px-6 py-2 rounded-lg hover:opacity-90 font-semibold">Salvar Ordem</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="finish-order-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-80 flex items-center justify-center z-50 p-4">
+        <div class="bg-gray-800 border border-emerald-500/20 rounded-2xl shadow-2xl p-8 w-full max-w-lg transform transition-all scale-95 opacity-0" id="finish-order-modal-content">
+            <h3 class="text-xl font-bold text-gray-200">Finalizar Ordem de Serviço</h3>
+            <p class="text-gray-400 mt-2 mb-4">Informe quem realizou cada serviço listado abaixo.</p>
+            <form id="finish-order-form">
+                <div id="finish-order-items-container" class="space-y-4 max-h-80 overflow-y-auto pr-2"></div>
+                <div class="flex justify-end pt-6 gap-4 mt-6 border-t border-gray-700">
+                    <button type="button" id="finish-cancel-btn" class="bg-gray-600 text-gray-200 px-6 py-2 rounded-lg hover:bg-gray-500 font-semibold">Cancelar</button>
+                    <button type="submit" class="btn-gradient text-gray-900 px-6 py-2 rounded-lg hover:opacity-90 font-semibold">Confirmar Finalização</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div id="confirm-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-80 flex items-center justify-center z-50 p-4">
+        <div class="bg-gray-800 border border-red-500/20 rounded-2xl shadow-2xl p-8 w-full max-w-md transform transition-all scale-95 opacity-0" id="confirm-modal-content">
+            <h3 class="text-xl font-bold text-gray-200">Confirmar Exclusão</h3>
+            <p id="confirm-modal-text" class="text-gray-400 mt-4">Tem certeza?</p>
+            <div class="flex justify-end pt-6 gap-4">
+                <button type="button" id="confirm-cancel-btn" class="bg-gray-600 text-gray-200 px-6 py-2 rounded-lg hover:bg-gray-500 font-semibold">Cancelar</button>
+                <button type="button" id="confirm-ok-btn" class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 font-semibold">Excluir</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="print-area"></div>
+    
+    <script src="script.js" type="module"></script>
 </body>
 </html>
