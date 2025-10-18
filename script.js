@@ -12,7 +12,6 @@ import {
 import { 
     collection, 
     getDocs, 
-    addDoc,
     doc,
     setDoc
 } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
@@ -21,7 +20,7 @@ import {
 // =================================================================
 //  ESTADO DA APLICAÇÃO
 // =================================================================
-let vistorias = []; // Começa vazio, será preenchido pelo Firebase
+let vistorias = []; 
 let currentVistoriaId = null;
 let currentStatusFilter = 'Todos';
 
@@ -38,8 +37,8 @@ const statusClassMap = {
     'FINISHED': 'status-Concluida',
     'REJECTED': 'status-Contestacao',
     'ACCEPTED': 'status-Pendente',
-    'Rejeitada': 'status-Contestacao', // Para o filtro funcionar
-    'Aceita': 'status-Pendente' // Para o filtro funcionar
+    'Rejeitada': 'status-Contestacao',
+    'Aceita': 'status-Pendente'
 };
 
 const statusTranslate = {
@@ -66,7 +65,6 @@ const userEmailDisplays = document.querySelectorAll('.user-email-display');
 const vistoriaList = document.getElementById('vistoria-list');
 const statusFilters = document.querySelectorAll('.status-filter');
 const backToDashboardBtn = document.getElementById('back-to-dashboard');
-// Seletores do Modal
 const newVistoriaModal = document.getElementById('new-vistoria-modal');
 const openModalBtn = document.getElementById('open-modal-btn');
 const closeModalBtn = document.getElementById('close-modal-btn');
@@ -76,10 +74,6 @@ const newVistoriaForm = document.getElementById('new-vistoria-form');
 // =================================================================
 //  LÓGICA DE DADOS (FIREBASE)
 // =================================================================
-
-/**
- * Busca as vistorias do Firestore e atualiza a variável local
- */
 async function fetchVistorias() {
     try {
         const vistoriasCol = collection(db, 'vistorias');
@@ -87,13 +81,10 @@ async function fetchVistorias() {
         vistorias = vistoriaSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     } catch (error) {
         console.error("Erro ao buscar vistorias: ", error);
-        alert("Não foi possível carregar os dados das vistorias. Verifique as regras de segurança do Firestore.");
+        alert("Não foi possível carregar os dados. Verifique as regras de segurança do Firestore.");
     }
 }
 
-/**
- * Função principal que busca os dados e renderiza a tela
- */
 async function fetchAndRenderVistorias() {
     await fetchVistorias();
     renderVistorias();
@@ -103,10 +94,6 @@ async function fetchAndRenderVistorias() {
 // =================================================================
 //  FUNÇÕES DE RENDERIZAÇÃO E UI
 // =================================================================
-
-/**
- * Renderiza a lista de vistorias na tabela do dashboard
- */
 function renderVistorias() {
     vistoriaList.innerHTML = '';
     
@@ -116,19 +103,19 @@ function renderVistorias() {
     });
 
     if (filteredVistorias.length === 0) {
-        vistoriaList.innerHTML = `<tr><td colspan="7" class="text-center py-10 text-gray-500">Nenhuma vistoria encontrada para este status.</td></tr>`;
+        vistoriaList.innerHTML = `<tr><td colspan="7" class="text-center py-10 text-gray-500">Nenhuma vistoria encontrada.</td></tr>`;
         return;
     }
 
     filteredVistorias.forEach(vistoria => {
-        const translatedStatus = statusTranslate[vistoria.status] || vistoria.status;
+        const translatedStatus = statusTranslate[v.status] || v.status;
         const statusClass = statusClassMap[vistoria.status] || 'bg-gray-500';
         const dataFormatada = vistoria.dataAgendamento ? new Date(vistoria.dataAgendamento + 'T00:00:00').toLocaleDateString('pt-BR') : 'Aguardando';
         const precoFormatado = vistoria.preco ? `R$ ${parseFloat(vistoria.preco).toFixed(2).replace('.', ',')}` : '-';
         
         const codigoHtml = vistoria.linkPagina 
-            ? `<a href="https://${vistoria.linkPagina}" target="_blank" class="text-custom-yellow hover:underline">${vistoria.codigoImovel || vistoria.id}</a>`
-            : `${vistoria.codigoImovel || vistoria.id}`;
+            ? `<a href="https://${vistoria.linkPagina}" target="_blank" class="text-custom-yellow hover:underline">${vistoria.codigoImovel}</a>`
+            : `${vistoria.codigoImovel}`;
 
         const row = `
             <tr class="hover:bg-gray-700/50">
@@ -149,19 +136,15 @@ function renderVistorias() {
     });
 }
 
-/**
- * Popula a página de detalhes com os dados da vistoria selecionada
- */
 function populateDetailsPage() {
     const vistoria = vistorias.find(v => v.id === currentVistoriaId);
     if (!vistoria) return;
 
-    document.getElementById('details-codigo').textContent = vistoria.codigoImovel || vistoria.id;
+    document.getElementById('details-codigo').textContent = vistoria.codigoImovel;
     document.getElementById('details-endereco').textContent = vistoria.endereco || 'Não informado';
     document.getElementById('details-tipo').textContent = vistoria.tipo;
     document.getElementById('details-data').textContent = vistoria.dataAgendamento ? new Date(vistoria.dataAgendamento + 'T00:00:00').toLocaleDateString('pt-BR') : 'Aguardando';
     document.getElementById('details-locatario').textContent = vistoria.locatario || 'Não informado';
-    
     document.getElementById('details-preco').textContent = vistoria.preco ? `R$ ${parseFloat(vistoria.preco).toFixed(2).replace('.', ',')}` : '-';
     document.getElementById('details-franquia').textContent = vistoria.franquia || 'Não informada';
 
@@ -220,8 +203,6 @@ function showDetailsPage() {
 // =================================================================
 //  LÓGICA DE AUTENTICAÇÃO E EVENTOS
 // =================================================================
-
-// Observador de estado de autenticação
 onAuthStateChanged(auth, user => {
     if (user) {
         showDashboard(user.email);
@@ -230,7 +211,6 @@ onAuthStateChanged(auth, user => {
     }
 });
 
-// Evento de login
 loginForm.addEventListener('submit', e => {
     e.preventDefault();
     const email = loginForm.email.value;
@@ -239,10 +219,8 @@ loginForm.addEventListener('submit', e => {
         .catch(err => alert("Erro no login: " + err.message));
 });
 
-// Evento de logout
 logoutButtons.forEach(btn => btn.addEventListener('click', () => signOut(auth)));
 
-// Evento de clique nos filtros de status
 statusFilters.forEach(filter => {
     filter.addEventListener('click', () => {
         statusFilters.forEach(f => f.classList.remove('active'));
@@ -252,7 +230,6 @@ statusFilters.forEach(filter => {
     });
 });
 
-// Evento de clique para ver detalhes (usando delegação de evento)
 vistoriaList.addEventListener('click', e => {
     const target = e.target.closest('.view-details-btn');
     if (target) {
@@ -261,7 +238,6 @@ vistoriaList.addEventListener('click', e => {
     }
 });
 
-// Evento para voltar ao dashboard
 backToDashboardBtn.addEventListener('click', () => showDashboard(auth.currentUser.email));
 
 // Eventos do Modal
@@ -271,10 +247,16 @@ closeModalBtn.addEventListener('click', () => newVistoriaModal.classList.add('hi
 newVistoriaForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const formData = new FormData(newVistoriaForm);
-    const codigoImovel = formData.get('codigoImovel');
+    const codigoVistoria = formData.get('codigoVistoria'); // Este será o ID do documento
+
+    if (!codigoVistoria) {
+        alert("O Código da Vistoria é obrigatório para o cadastro manual.");
+        return;
+    }
 
     const vistoriaData = {
-        codigoImovel: codigoImovel,
+        codigoImovel: formData.get('codigoImovel'),
+        codigoVistoria: codigoVistoria,
         endereco: formData.get('endereco'),
         locatario: formData.get('locatario'),
         dataAgendamento: formData.get('dataAgendamento'),
@@ -287,13 +269,12 @@ newVistoriaForm.addEventListener('submit', async (e) => {
     };
 
     try {
-        // Usa o código da vistoria como ID do documento
-        const docRef = doc(db, "vistorias", codigoImovel);
-        await setDoc(docRef, vistoriaData);
+        const docRef = doc(db, "vistorias", codigoVistoria);
+        await setDoc(docRef, vistoriaData, { merge: true }); // Usar merge para não sobrescrever dados do webhook
 
         newVistoriaForm.reset();
         newVistoriaModal.classList.add('hidden');
-        fetchAndRenderVistorias(); // Atualiza a lista na tela
+        fetchAndRenderVistorias();
         alert('Vistoria salva com sucesso!');
     } catch (error) {
         console.error("Erro ao adicionar vistoria: ", error);
