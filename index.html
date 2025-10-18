@@ -48,6 +48,9 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
                     <h1 class="text-3xl font-bold text-gray-900">Painel de Vistorias</h1>
+                    <button id="open-modal-btn" class="px-5 py-2.5 text-sm font-medium text-white bg-custom-yellow rounded-lg hover:bg-opacity-90">
+                        + Nova Vistoria
+                    </button>
                 </div>
 
                 <div class="mb-6">
@@ -129,6 +132,36 @@
         </main>
     </div>
     
+    <div id="new-vistoria-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg">
+            <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="text-xl font-semibold">Cadastrar Nova Vistoria</h3>
+                <button id="close-modal-btn" class="text-gray-400 hover:text-gray-600 text-3xl">&times;</button>
+            </div>
+            <form id="new-vistoria-form" class="p-6 space-y-4">
+                <input name="codigoImovel" type="text" placeholder="Código do Imóvel (ex: SC-123)" required class="modal-input">
+                <input name="endereco" type="text" placeholder="Endereço Completo" required class="modal-input">
+                <input name="locatario" type="text" placeholder="Nome do Locatário" required class="modal-input">
+                <input name="dataAgendamento" type="date" required class="modal-input" title="Data de Agendamento">
+                <select name="tipo" required class="modal-input">
+                    <option value="Entrada">Entrada</option>
+                    <option value="Saída">Saída</option>
+                </select>
+                <select name="status" required class="modal-input">
+                    <option value="Agendada">Agendada</option>
+                    <option value="Pendente de Análise">Pendente de Análise</option>
+                    <option value="Em Contestação">Em Contestação</option>
+                    <option value="Concluída">Concluída</option>
+                </select>
+                <div class="bg-gray-50 px-6 py-4 text-right rounded-b-2xl mt-4">
+                    <button type="submit" class="w-full sm:w-auto px-6 py-3 text-sm font-semibold rounded-lg text-white bg-custom-blue hover:bg-opacity-90">
+                        Salvar Vistoria
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script type="module" src="firebase-config.js"></script>
     <script type="module" src="script.js"></script>
 </body>
