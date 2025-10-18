@@ -66,10 +66,11 @@
                     <table class="w-full text-sm text-left">
                         <thead class="text-xs uppercase">
                             <tr>
-                                <th scope="col" class="py-3 px-6">Cód. Imóvel</th>
+                                <th scope="col" class="py-3 px-6">Cód. Vistoria</th>
                                 <th scope="col" class="py-3 px-6 hidden md:table-cell">Endereço</th>
                                 <th scope="col" class="py-3 px-6">Tipo</th>
                                 <th scope="col" class="py-3 px-6 hidden sm:table-cell">Agendamento</th>
+                                <th scope="col" class="py-3 px-6">Valor</th>
                                 <th scope="col" class="py-3 px-6">Status</th>
                                 <th scope="col" class="py-3 px-6 text-center">Ações</th>
                             </tr>
@@ -106,6 +107,8 @@
                                 <div><p class="text-gray-500">Tipo de Vistoria</p><p class="font-semibold text-gray-800" id="details-tipo"></p></div>
                                 <div><p class="text-gray-500">Data Agendada</p><p class="font-semibold text-gray-800" id="details-data"></p></div>
                                 <div><p class="text-gray-500">Locatário</p><p class="font-semibold text-gray-800" id="details-locatario"></p></div>
+                                <div><p class="text-gray-500">Valor</p><p class="font-semibold text-gray-800" id="details-preco"></p></div>
+                                <div><p class="text-gray-500">Franquia</p><p class="font-semibold text-gray-800" id="details-franquia"></p></div>
                             </div>
                         </div>
 
@@ -139,7 +142,7 @@
                 <button id="close-modal-btn" class="text-gray-400 hover:text-gray-600 text-3xl">&times;</button>
             </div>
             <form id="new-vistoria-form" class="p-6 space-y-4">
-                <input name="codigoImovel" type="text" placeholder="Código do Imóvel (ex: SC-123)" required class="modal-input">
+                <input name="codigoImovel" type="text" placeholder="Código da Vistoria (ex: PVLE.007...)" required class="modal-input">
                 <input name="endereco" type="text" placeholder="Endereço Completo" required class="modal-input">
                 <input name="locatario" type="text" placeholder="Nome do Locatário" required class="modal-input">
                 <input name="dataAgendamento" type="date" required class="modal-input" title="Data de Agendamento">
