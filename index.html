@@ -16,8 +16,7 @@
     <div id="login-page" class="flex items-center justify-center min-h-screen bg-custom-blue">
         <div class="w-full max-w-md p-8 space-y-8 bg-white rounded-2xl shadow-xl m-4">
             <div class="flex justify-center">
-                <img src="logo.png" alt="Logo da Empresa" class="h-16" onerror="this.alt='Logo não encontrada'; this.style.display='none'; document.getElementById('logo-text').style.display='block';">
-                <h1 id="logo-text" class="text-3xl font-bold text-custom-blue" style="display: none;">Análise de Vistoria</h1>
+                <img src="logo.png" alt="Logo da Empresa" class="h-16">
             </div>
             <h2 class="text-2xl font-bold text-center text-gray-800">Acesse sua conta</h2>
             <form id="login-form" class="mt-8 space-y-6">
@@ -26,7 +25,7 @@
                     <input id="password" name="password" type="password" autocomplete="current-password" required class="w-full px-4 py-3 text-gray-700 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-yellow focus:border-transparent" placeholder="Sua senha">
                 </div>
                 <div class="flex items-center justify-between"><a href="#" class="text-sm font-medium text-custom-blue hover:text-custom-yellow">Esqueceu sua senha?</a></div>
-                <div><button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent text-lg font-semibold rounded-lg text-white bg-custom-blue hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue transition duration-300 ease-in-out">Entrar</button></div>
+                <div><button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent text-lg font-semibold rounded-lg text-white bg-custom-blue hover:bg-opacity-90">Entrar</button></div>
             </form>
         </div>
     </div>
@@ -35,7 +34,7 @@
         <header class="bg-white shadow-md">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-20">
-                    <div class="flex-shrink-0"><img class="h-12" src="logo.png" alt="Logo da Empresa" onerror="this.style.display='none'"></div>
+                    <div class="flex-shrink-0"><img class="h-12" src="logo.png" alt="Logo da Empresa"></div>
                     <div class="flex items-center">
                         <span class="mr-4 font-medium text-gray-600 hidden sm:block user-email-display"></span>
                         <button class="px-4 py-2 text-sm font-medium text-white bg-custom-blue rounded-lg hover:bg-opacity-90 logout-button">Sair</button>
@@ -66,7 +65,7 @@
                     <table class="w-full text-sm text-left">
                         <thead class="text-xs uppercase">
                             <tr>
-                                <th scope="col" class="py-3 px-6">Cód. Vistoria</th>
+                                <th scope="col" class="py-3 px-6">Cód. Imóvel</th>
                                 <th scope="col" class="py-3 px-6 hidden md:table-cell">Endereço</th>
                                 <th scope="col" class="py-3 px-6">Tipo</th>
                                 <th scope="col" class="py-3 px-6 hidden sm:table-cell">Agendamento</th>
@@ -75,8 +74,7 @@
                                 <th scope="col" class="py-3 px-6 text-center">Ações</th>
                             </tr>
                         </thead>
-                        <tbody id="vistoria-list">
-                            </tbody>
+                        <tbody id="vistoria-list"></tbody>
                     </table>
                 </div>
             </div>
@@ -85,7 +83,7 @@
 
     <div id="details-page" class="hidden min-h-screen">
          <header class="bg-white shadow-md">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex items-center justify-between h-20"><div class="flex-shrink-0"><img class="h-12" src="logo.png" alt="Logo da Empresa" onerror="this.style.display='none'"></div><div class="flex items-center"><span class="mr-4 font-medium text-gray-600 hidden sm:block user-email-display"></span><button class="px-4 py-2 text-sm font-medium text-white bg-custom-blue rounded-lg hover:bg-opacity-90 logout-button">Sair</button></div></div></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex items-center justify-between h-20"><div class="flex-shrink-0"><img class="h-12" src="logo.png" alt="Logo da Empresa"></div><div class="flex items-center"><span class="mr-4 font-medium text-gray-600 hidden sm:block user-email-display"></span><button class="px-4 py-2 text-sm font-medium text-white bg-custom-blue rounded-lg hover:bg-opacity-90 logout-button">Sair</button></div></div></div>
         </header>
 
         <main class="py-10">
@@ -117,18 +115,17 @@
                             <p class="text-sm text-gray-500 mb-6">Selecione a próxima etapa para esta vistoria.</p>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <a id="action-download-report" href="#" target="_blank" class="action-button bg-gray-600">Baixar Relatório PDF</a>
-                                <button id="action-request-correction" class="action-button bg-orange-500">Solicitar Correção</button>
-                                <button id="action-send-maintenance" class="action-button bg-red-600">Encaminhar para Manutenção</button>
-                                <button id="action-upload-bitrix" class="action-button bg-blue-600">Anexar Laudo no Bitrix</button>
-                                <button id="action-approve" class="action-button bg-green-600 col-span-1 sm:col-span-2">Aprovar e Finalizar Vistoria</button>
+                                <button class="action-button bg-orange-500">Solicitar Correção</button>
+                                <button class="action-button bg-red-600">Encaminhar para Manutenção</button>
+                                <button class="action-button bg-blue-600">Anexar Laudo no Bitrix</button>
+                                <button class="action-button bg-green-600 col-span-1 sm:col-span-2">Aprovar e Finalizar Vistoria</button>
                             </div>
                         </div>
                     </div>
 
                     <div class="bg-white p-8 rounded-2xl shadow-lg">
                         <h3 class="text-xl font-semibold text-gray-800 mb-6">Histórico de Eventos</h3>
-                        <ul id="details-history" class="space-y-4 text-sm text-gray-600 border-l-2 border-gray-200 pl-4">
-                           </ul>
+                        <ul id="details-history" class="space-y-4 text-sm text-gray-600 border-l-2 border-gray-200 pl-4"></ul>
                     </div>
                 </div>
             </div>
@@ -142,7 +139,8 @@
                 <button id="close-modal-btn" class="text-gray-400 hover:text-gray-600 text-3xl">&times;</button>
             </div>
             <form id="new-vistoria-form" class="p-6 space-y-4">
-                <input name="codigoImovel" type="text" placeholder="Código da Vistoria (ex: PVLE.007...)" required class="modal-input">
+                <input name="codigoVistoria" type="text" placeholder="Código da Vistoria (ex: PVLE.007...)" required class="modal-input">
+                <input name="codigoImovel" type="text" placeholder="Código do Imóvel (ex: 9999 - Apto Teste)" required class="modal-input">
                 <input name="endereco" type="text" placeholder="Endereço Completo" required class="modal-input">
                 <input name="locatario" type="text" placeholder="Nome do Locatário" required class="modal-input">
                 <input name="dataAgendamento" type="date" required class="modal-input" title="Data de Agendamento">
